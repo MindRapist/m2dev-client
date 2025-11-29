@@ -2180,4 +2180,7 @@ class GameWindow(ui.ScriptWindow):
 
 	# END_OF_WEDDING
 
+	if app.FIX_REFRESH_SKILL_COOLDOWN:
+		def	SkillClearCoolTime(self, slotIndex):
+			self.interface.SkillClearCoolTime(slotIndex)
 

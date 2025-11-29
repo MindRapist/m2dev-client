@@ -50,7 +50,11 @@ class CharacterWindow(ui.ScriptWindow):
 	SUPPORT_PAGE_SLOT_COUNT = 12
 
 	PAGE_SLOT_COUNT = 12
-	PAGE_HORSE = 2
+
+	if app.FIX_HORSE_SKILLS_TAB:
+		PAGE_HORSE = 3
+	else:
+		PAGE_HORSE = 2
 
 	SKILL_GROUP_NAME_DICT = {
 		playerSettingModule.JOB_WARRIOR	: { 1 : localeInfo.SKILL_GROUP_WARRIOR_1,	2 : localeInfo.SKILL_GROUP_WARRIOR_2, },
@@ -131,6 +135,10 @@ class CharacterWindow(ui.ScriptWindow):
 		self.supportSkillPointValue = None
 		self.skillGroupButton1 = None
 		self.skillGroupButton2 = None
+
+		if app.FIX_HORSE_SKILLS_TAB:
+			self.skillGroupButton3 = None
+
 		self.activeSkillGroupName = None
 
 		self.guildNameSlot = None
@@ -178,6 +186,10 @@ class CharacterWindow(ui.ScriptWindow):
 		self.supportSkillPointValue = self.GetChild("Support_Skill_Point_Value")
 		self.skillGroupButton1 = self.GetChild("Skill_Group_Button_1")
 		self.skillGroupButton2 = self.GetChild("Skill_Group_Button_2")
+
+		if app.FIX_HORSE_SKILLS_TAB:
+			self.skillGroupButton3 = self.GetChild("Skill_Group_Button_3")
+
 		self.activeSkillGroupName = self.GetChild("Active_Skill_Group_Name")
 
 		self.tabDict = {
@@ -237,11 +249,12 @@ class CharacterWindow(ui.ScriptWindow):
 		self.skillGroupButton = (
 			self.GetChild("Skill_Group_Button_1"),
 			self.GetChild("Skill_Group_Button_2"),
-		)
+		) + ((self.GetChild("Skill_Group_Button_3"),) if app.FIX_HORSE_SKILLS_TAB else ())
 
 		
 		global SHOW_ONLY_ACTIVE_SKILL
 		global HIDE_SUPPORT_SKILL_POINT
+
 		if SHOW_ONLY_ACTIVE_SKILL or HIDE_SUPPORT_SKILL_POINT:	
 			self.GetChild("Support_Skill_Point_Label").Hide()
 
@@ -253,6 +266,7 @@ class CharacterWindow(ui.ScriptWindow):
 		self.questScrollBar = self.GetChild("Quest_ScrollBar")
 		self.questScrollBar.SetScrollEvent(ui.__mem_func__(self.OnQuestScroll))
 		self.questSlot = self.GetChild("Quest_Slot")
+
 		for i in xrange(quest.QUEST_MAX_NUM):
 			self.questSlot.HideSlotBaseImage(i)
 			self.questSlot.SetCoverButton(i,\
@@ -264,6 +278,7 @@ class CharacterWindow(ui.ScriptWindow):
 		self.questNameList = []
 		self.questLastTimeList = []
 		self.questLastCountList = []
+
 		for i in xrange(quest.QUEST_MAX_NUM):
 			self.questNameList.append(self.GetChild("Quest_Name_0" + str(i)))
 			self.questLastTimeList.append(self.GetChild("Quest_LastTime_0" + str(i)))
@@ -284,7 +299,6 @@ class CharacterWindow(ui.ScriptWindow):
 											"d:/ymir work/ui/game/windows/btn_plus_down.sub")
 
 	def __SetEmotionSlot(self):
-
 		self.emotionToolTip = uiToolTip.ToolTip()
 
 		for slot in (self.soloEmotionSlot, self.dualEmotionSlot):
@@ -302,6 +316,7 @@ class CharacterWindow(ui.ScriptWindow):
 			emotionIdx = slotIdx
 
 			slot = self.soloEmotionSlot
+
 			if slotIdx > 50:
 				slot = self.dualEmotionSlot
 
@@ -314,16 +329,19 @@ class CharacterWindow(ui.ScriptWindow):
 
 		if app.IsPressed(app.DIK_LCONTROL):
 			player.RequestAddToEmptyLocalQuickSlot(player.SLOT_TYPE_EMOTION, slotIndex)
+
 			return
 
 		mouseModule.mouseController.AttachObject(self, player.SLOT_TYPE_EMOTION, slotIndex, slotIndex)
 
 	def __ClickEmotionSlot(self, slotIndex):
 		print "click emotion"
+
 		if not slotIndex in emotion.EMOTION_DICT:
 			return
 
 		print "check acting"
+
 		if player.IsActingEmotion():
 			return
 
@@ -336,6 +354,7 @@ class CharacterWindow(ui.ScriptWindow):
 			if 0 == vid or vid == player.GetMainCharacterIndex() or chr.IsNPC(vid) or chr.IsEnemy(vid):
 				import chat
 				chat.AppendChat(chat.CHAT_TYPE_INFO, localeInfo.EMOTION_CHOOSE_ONE)
+
 				return
 
 			command += " " + chr.GetNameByVID(vid)
@@ -595,25 +614,21 @@ class CharacterWindow(ui.ScriptWindow):
 			statusPlusButton.Hide()
 
 	def SelectSkill(self, skillSlotIndex):
-
 		mouseController = mouseModule.mouseController
 
 		if False == mouseController.isAttached():
-
 			srcSlotIndex = self.__RealSkillSlotToSourceSlot(skillSlotIndex)
 			selectedSkillIndex = player.GetSkillIndex(srcSlotIndex)
 
 			if skill.CanUseSkill(selectedSkillIndex):
-
 				if app.IsPressed(app.DIK_LCONTROL):
-
 					player.RequestAddToEmptyLocalQuickSlot(player.SLOT_TYPE_SKILL, srcSlotIndex)
+
 					return
 
 				mouseController.AttachObject(self, player.SLOT_TYPE_SKILL, srcSlotIndex, selectedSkillIndex)
 
 		else:
-
 			mouseController.DeattachObject()
 
 	def SelectEmptySlot(self, SlotIndex):
@@ -621,7 +636,6 @@ class CharacterWindow(ui.ScriptWindow):
 
 	## ToolTip
 	def OverInItem(self, slotNumber):
-
 		if mouseModule.mouseController.isAttached():
 			return
 
@@ -728,6 +742,7 @@ class CharacterWindow(ui.ScriptWindow):
 
 	def __GetStatMinusPoint(self):
 		POINT_STAT_RESET_COUNT = 112
+
 		return player.GetStatus(POINT_STAT_RESET_COUNT)
 
 	def __OverInStatMinusButton(self, stat):
@@ -761,6 +776,7 @@ class CharacterWindow(ui.ScriptWindow):
 
 	def OnPressEscapeKey(self):
 		self.Close()
+
 		return True
 
 	def OnUpdate(self):
@@ -771,20 +787,20 @@ class CharacterWindow(ui.ScriptWindow):
 		global SHOW_LIMIT_SUPPORT_SKILL_LIST
 
 		skillPage = self.skillPageDict[name]
-
 		startSlotIndex = skillPage.GetStartIndex()
+
 		if "ACTIVE" == name:
 			if self.PAGE_HORSE == self.curSelectedSkillGroup:
 				startSlotIndex += slotCount
 
-		getSkillType=skill.GetSkillType
-		getSkillIndex=player.GetSkillIndex
-		getSkillGrade=player.GetSkillGrade
-		getSkillLevel=player.GetSkillLevel
-		getSkillLevelUpPoint=skill.GetSkillLevelUpPoint
-		getSkillMaxLevel=skill.GetSkillMaxLevel
-		for i in xrange(slotCount+1):
+		getSkillType = skill.GetSkillType
+		getSkillIndex = player.GetSkillIndex
+		getSkillGrade = player.GetSkillGrade
+		getSkillLevel = player.GetSkillLevel
+		getSkillLevelUpPoint = skill.GetSkillLevelUpPoint
+		getSkillMaxLevel = skill.GetSkillMaxLevel
 
+		for i in xrange(slotCount + 1):
 			slotIndex = i + startSlotIndex
 			skillIndex = getSkillIndex(slotIndex)
 
@@ -807,39 +823,76 @@ class CharacterWindow(ui.ScriptWindow):
 				elif 3 == skillGrade:
 					skillLevel = 40
 
-				skillPage.SetSkillSlotNew(slotIndex, skillIndex, max(skillLevel-1, 0), skillLevel)
+				skillPage.SetSkillSlotNew(slotIndex, skillIndex, max(skillLevel - 1, 0), skillLevel)
 				skillPage.SetSlotCount(slotIndex, skillLevel)
 
 			## ACTIVE
 			elif skill.SKILL_TYPE_ACTIVE == skillType:
 				for j in xrange(skill.SKILL_GRADE_COUNT):
 					realSlotIndex = self.__GetRealSkillSlot(j, slotIndex)
+
 					skillPage.SetSkillSlotNew(realSlotIndex, skillIndex, j, skillLevel)
 					skillPage.SetCoverButton(realSlotIndex)
 
-					if (skillGrade == skill.SKILL_GRADE_COUNT) and j == (skill.SKILL_GRADE_COUNT-1):
+					if (skillGrade == skill.SKILL_GRADE_COUNT) and j == (skill.SKILL_GRADE_COUNT - 1):
 						skillPage.SetSlotCountNew(realSlotIndex, skillGrade, skillLevel)
 					elif (not self.__CanUseSkillNow()) or (skillGrade != j):
 						skillPage.SetSlotCount(realSlotIndex, 0)
 						skillPage.DisableCoverButton(realSlotIndex)
+
+						if app.FIX_REFRESH_SKILL_COOLDOWN:
+							if not player.IsSkillActive(slotIndex):
+								skillPage.DeactivateSlot(realSlotIndex)
+
+							if player.IsSkillCoolTime(slotIndex) and skillGrade != j:
+								skillPage.TransferSlotCoolTime(realSlotIndex, self.__GetRealSkillSlot(skillGrade, i))
+							else:
+								self.SkillClearCoolTime(realSlotIndex)
 					else:
 						skillPage.SetSlotCountNew(realSlotIndex, skillGrade, skillLevel)
 
-			## 그외
+					if app.FIX_REFRESH_SKILL_COOLDOWN:
+						if player.IsSkillActive(slotIndex) and (skillGrade == j):
+							skillPage.ActivateSlot(realSlotIndex)
 			else:
 				if not SHOW_LIMIT_SUPPORT_SKILL_LIST or skillIndex in SHOW_LIMIT_SUPPORT_SKILL_LIST:
 					realSlotIndex = self.__GetETCSkillRealSlotIndex(slotIndex)
+
 					skillPage.SetSkillSlot(realSlotIndex, skillIndex, skillLevel)
 					skillPage.SetSlotCountNew(realSlotIndex, skillGrade, skillLevel)
 
 					if skill.CanUseSkill(skillIndex):
 						skillPage.SetCoverButton(realSlotIndex)
 
+					if app.FIX_REFRESH_SKILL_COOLDOWN:
+						if player.IsSkillCoolTime(slotIndex) and skillGrade != j:
+							skillPage.TransferSlotCoolTime(realSlotIndex, self.__GetRealSkillSlot(skillGrade, i))
+
+						if player.IsSkillActive(slotIndex) and (skillGrade == j or (skillGrade >= skill.SKILL_GRADE_COUNT) and j == (skill.SKILL_GRADE_COUNT - 1)):
+							skillPage.ActivateSlot(realSlotIndex)
+						else:
+							skillPage.DeactivateSlot(realSlotIndex)
+					else:
+						if not player.IsSkillActive(slotIndex):
+							skillPage.DeactivateSlot(realSlotIndex)
+
 			skillPage.RefreshSlot()
 
+		if app.FIX_REFRESH_SKILL_COOLDOWN:
+			self.__RestoreSlotCoolTime(skillPage)
+
+	if app.FIX_REFRESH_SKILL_COOLDOWN:
+		def __RestoreSlotCoolTime(self, skillPage):
+			restoreType = skill.SKILL_TYPE_NONE
+
+			if self.PAGE_HORSE == self.curSelectedSkillGroup:
+				restoreType = skill.SKILL_TYPE_HORSE
+			else:
+				restoreType = skill.SKILL_TYPE_ACTIVE
+
+			skillPage.RestoreSlotCoolTime(restoreType)
 
 	def RefreshSkill(self):
-
 		if self.isLoaded==0:
 			return
 
@@ -847,8 +900,8 @@ class CharacterWindow(ui.ScriptWindow):
 			self.RefreshCharacter()
 			return
 
-
 		global SHOW_ONLY_ACTIVE_SKILL
+
 		if SHOW_ONLY_ACTIVE_SKILL:
 			self.__RefreshSkillPage("ACTIVE", self.ACTIVE_PAGE_SLOT_COUNT)
 		else:
@@ -858,7 +911,6 @@ class CharacterWindow(ui.ScriptWindow):
 		self.RefreshSkillPlusButtonList()
 
 	def CanShowPlusButton(self, skillIndex, skillLevel, curStatPoint):
-
 		## 스킬이 있으면
 		if 0 == skillIndex:
 			return False
@@ -871,6 +923,7 @@ class CharacterWindow(ui.ScriptWindow):
 
 	def __RefreshSkillPlusButton(self, name):
 		global HIDE_SUPPORT_SKILL_POINT
+
 		if HIDE_SUPPORT_SKILL_POINT and "SUPPORT" == name:
 			return
 
@@ -878,11 +931,13 @@ class CharacterWindow(ui.ScriptWindow):
 		slotWindow.HideAllSlotButton()
 
 		slotStatType = self.skillPageStatDict[name]
+
 		if 0 == slotStatType:
 			return
 
 		statPoint = player.GetStatus(slotStatType)
 		startSlotIndex = slotWindow.GetStartIndex()
+
 		if "HORSE" == name:
 			startSlotIndex += self.ACTIVE_PAGE_SLOT_COUNT
 
@@ -904,7 +959,7 @@ class CharacterWindow(ui.ScriptWindow):
 							slotWindow.ShowSlotButton(self.__GetETCSkillRealSlotIndex(slotIndex))
 
 				else:
-					if "SUPPORT" == name:						
+					if "SUPPORT" == name:
 						if not SHOW_LIMIT_SUPPORT_SKILL_LIST or skillIndex in SHOW_LIMIT_SUPPORT_SKILL_LIST:
 							if self.CanShowPlusButton(skillIndex, skillLevel, statPoint):
 								slotWindow.ShowSlotButton(slotIndex)
@@ -914,7 +969,6 @@ class CharacterWindow(ui.ScriptWindow):
 					
 
 	def RefreshSkillPlusButtonList(self):
-
 		if self.isLoaded==0:
 			return
 
@@ -933,6 +987,7 @@ class CharacterWindow(ui.ScriptWindow):
 
 		except:
 			import exception
+
 			exception.Abort("CharacterWindow.RefreshSkillPlusButtonList.BindObject")
 
 	def RefreshSkillPlusPointLabel(self):
@@ -996,11 +1051,15 @@ class CharacterWindow(ui.ScriptWindow):
 
 		for slotWindow in self.skillPageDict.values():
 			if slotWindow.HasSlot(slotIndex):
-				slotWindow.SetSlotCoolTime(slotIndex, coolTime)
+				if app.FIX_REFRESH_SKILL_COOLDOWN:
+					slotWindow.StoreSlotCoolTime(skillType, slotIndex, coolTime)
+					self.__RestoreSlotCoolTime(slotWindow)
+				else:
+					slotWindow.SetSlotCoolTime(slotIndex, coolTime)
+
 				return
 
 	def OnActivateSkill(self, slotIndex):
-
 		skillGrade = player.GetSkillGrade(slotIndex)
 		slotIndex = self.__GetRealSkillSlot(skillGrade, slotIndex)
 
@@ -1010,17 +1069,24 @@ class CharacterWindow(ui.ScriptWindow):
 				return
 
 	def OnDeactivateSkill(self, slotIndex):
-
 		skillGrade = player.GetSkillGrade(slotIndex)
 		slotIndex = self.__GetRealSkillSlot(skillGrade, slotIndex)
 
 		for slotWindow in self.skillPageDict.values():
 			if slotWindow.HasSlot(slotIndex):
 				slotWindow.DeactivateSlot(slotIndex)
+
 				return
 
 	def __ShowJobToolTip(self):
 		self.toolTipJob.ShowToolTip()
+
+	if app.FIX_REFRESH_SKILL_COOLDOWN:
+		def SkillClearCoolTime(self, slotIndex):
+			slotIndex = self.__GetRealSkillSlot(player.GetSkillGrade(slotIndex), slotIndex)
+			for slotWindow in self.skillPageDict.values():
+				if slotWindow.HasSlot(slotIndex):
+					slotWindow.SetSlotCoolTime(slotIndex, 0)
 
 	def __HideJobToolTip(self):
 		self.toolTipJob.HideToolTip()
@@ -1037,6 +1103,7 @@ class CharacterWindow(ui.ScriptWindow):
 				jobInfoData=localeInfo.JOBINFO_DATA_LIST[mainJob][subJob]
 			except IndexError:
 				print "uiCharacter.CharacterWindow.__SetJobText(mainJob=%d, subJob=%d)" % (mainJob, subJob)
+
 				return
 
 			self.toolTipJob.AutoAppendTextLine(jobInfoTitle)
@@ -1116,7 +1183,6 @@ class CharacterWindow(ui.ScriptWindow):
 				self.__SelectSkillGroup(0)
 
 	def __SetSkillGroupName(self, race, group):
-
 		job = chr.RaceToJob(race)
 
 		if not self.SKILL_GROUP_NAME_DICT.has_key(job):
@@ -1127,24 +1193,41 @@ class CharacterWindow(ui.ScriptWindow):
 		if 0 == group:
 			self.skillGroupButton1.SetText(nameList[1])
 			self.skillGroupButton2.SetText(nameList[2])
+
+			if app.FIX_HORSE_SKILLS_TAB:
+				if self.__CanUseHorseSkill():
+					self.skillGroupButton3.SetText(localeInfo.SKILL_GROUP_HORSE)
+					self.skillGroupButton3.Show()
+					self.skillGroupButton3.SetPosition(95, 2)
+				else:
+					self.skillGroupButton3.Hide()
+
 			self.skillGroupButton1.Show()
 			self.skillGroupButton2.Show()
 			self.activeSkillGroupName.Hide()
-
 		else:
-
 			if self.__CanUseHorseSkill():
 				self.activeSkillGroupName.Hide()
 				self.skillGroupButton1.SetText(nameList.get(group, "Noname"))
-				self.skillGroupButton2.SetText(localeInfo.SKILL_GROUP_HORSE)
-				self.skillGroupButton1.Show()
-				self.skillGroupButton2.Show()
 
+				if app.FIX_HORSE_SKILLS_TAB:
+					self.skillGroupButton3.SetText(localeInfo.SKILL_GROUP_HORSE)
+					self.skillGroupButton1.Show()
+					self.skillGroupButton2.Hide()
+					self.skillGroupButton3.Show()
+					self.skillGroupButton3.SetPosition(50, 2)
+				else:
+					self.skillGroupButton2.SetText(localeInfo.SKILL_GROUP_HORSE)
+					self.skillGroupButton1.Show()
+					self.skillGroupButton2.Show()
 			else:
 				self.activeSkillGroupName.SetText(nameList.get(group, "Noname"))
 				self.activeSkillGroupName.Show()
 				self.skillGroupButton1.Hide()
 				self.skillGroupButton2.Hide()
+
+				if app.FIX_HORSE_SKILLS_TAB:
+					self.skillGroupButton3.Hide()
 
 	def __SetSkillSlotData(self, race, group, empire=0):
 
@@ -1157,19 +1240,42 @@ class CharacterWindow(ui.ScriptWindow):
 		## Refresh
 		self.RefreshSkill()
 
-	def __SelectSkillGroup(self, index):
-		for btn in self.skillGroupButton:
-			btn.SetUp()
-		self.skillGroupButton[index].Down()
+	if app.FIX_HORSE_SKILLS_TAB:
+		def __SelectSkillGroup(self, pageIndex, (PAGE_SKILL_1, PAGE_SKILL_2, PAGE_SKILL_HORSE) = range(3)):
+			for pageButton in self.skillGroupButton:
+				pageButton.SetUp()
 
-		if self.__CanUseHorseSkill():
-			if 0 == index:
-				index = net.GetMainActorSkillGroup()-1
-			elif 1 == index:
-				index = self.PAGE_HORSE
+			self.skillGroupButton[pageIndex].Down()
 
-		self.curSelectedSkillGroup = index
-		self.__SetSkillSlotData(net.GetMainActorRace(), index+1, net.GetMainActorEmpire())
+			if pageIndex in (PAGE_SKILL_1, PAGE_SKILL_2):
+				skillGroupIndex = net.GetMainActorSkillGroup()
+
+				if bool(skillGroupIndex):
+					(tmpCurSkillGroup, tmpSkillGroup) = (skillGroupIndex - 1, skillGroupIndex)
+				else:
+					(tmpCurSkillGroup, tmpSkillGroup) = (pageIndex, pageIndex + 1)
+
+				self.curSelectedSkillGroup = tmpCurSkillGroup
+				self.__SetSkillSlotData(net.GetMainActorRace(), tmpSkillGroup, net.GetMainActorEmpire())
+			elif pageIndex == PAGE_SKILL_HORSE and self.__CanUseHorseSkill():
+				self.curSelectedSkillGroup = self.PAGE_HORSE
+
+			self.RefreshSkill()
+	else:
+		def __SelectSkillGroup(self, index):
+			for btn in self.skillGroupButton:
+				btn.SetUp()
+
+			self.skillGroupButton[index].Down()
+
+			if self.__CanUseHorseSkill():
+				if 0 == index:
+					index = net.GetMainActorSkillGroup() - 1
+				elif 1 == index:
+					index = self.PAGE_HORSE
+
+			self.curSelectedSkillGroup = index
+			self.__SetSkillSlotData(net.GetMainActorRace(), index + 1, net.GetMainActorEmpire())
 
 	def __CanUseSkillNow(self):
 		if 0 == net.GetMainActorSkillGroup():
@@ -1178,7 +1284,6 @@ class CharacterWindow(ui.ScriptWindow):
 		return True
 
 	def __CanUseHorseSkill(self):
-
 		slotIndex = player.GetSkillSlotIndex(player.SKILL_INDEX_RIDING)
 
 		if not slotIndex:
@@ -1186,8 +1291,10 @@ class CharacterWindow(ui.ScriptWindow):
 
 		grade = player.GetSkillGrade(slotIndex)
 		level = player.GetSkillLevel(slotIndex)
+
 		if level < 0:
 			level *= -1
+
 		if grade >= 1 and level >= 1:
 			return True
 

@@ -42,6 +42,7 @@ class MessengerItem(ui.Window):
 
 	def SetName(self, name):
 		self.name = name
+		
 		if name:
 			self.text.SetText(name)
 			self.SetSize(20 + 6*len(name) + 4, 16)
@@ -390,7 +391,7 @@ class MessengerWindow(ui.ScriptWindow):
 	def __LoadWindow(self):
 
 		pyScrLoader = ui.PythonScriptLoader()
-		pyScrLoader.LoadScriptFile(self, "UIScript/MessengerWindow.py")		
+		pyScrLoader.LoadScriptFile(self, "UIScript/MessengerWindow.py")
 
 		try:
 			self.board = self.GetChild("board")
@@ -669,6 +670,12 @@ class MessengerWindow(ui.ScriptWindow):
 				self.selectedItem.OnRemove()
 				self.selectedItem.UnSelect()
 				self.selectedItem = None
+
+				if app.FIX_MESSENGER_ACTION_SYNC:
+					self.whisperButton.Disable()
+					self.mobileButton.Disable()
+					self.removeButton.Disable()
+
 				self.OnRefreshList()
 
 		self.OnCloseQuestionDialog()

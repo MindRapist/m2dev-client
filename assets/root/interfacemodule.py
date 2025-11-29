@@ -535,6 +535,11 @@ class Interface(object):
 	def OnChangeCurrentSkill(self, skillSlotNumber):
 		self.wndTaskBar.OnChangeCurrentSkill(skillSlotNumber)
 
+	if app.FIX_REFRESH_SKILL_COOLDOWN:
+		def	SkillClearCoolTime(self, slotIndex):
+			self.wndCharacter.SkillClearCoolTime(slotIndex)
+			self.wndTaskBar.SkillClearCoolTime(slotIndex)
+
 	def SelectMouseButtonEvent(self, dir, event):
 		self.wndTaskBar.SelectMouseButtonEvent(dir, event)
 
