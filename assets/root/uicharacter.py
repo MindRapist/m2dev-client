@@ -572,7 +572,7 @@ class CharacterWindow(ui.ScriptWindow):
 
 		self.toolTipAlignment.ClearToolTip()
 		self.toolTipAlignment.AutoAppendTextLine(localeInfo.TITLE_NAME_LIST[grade], gradeColor)
-		self.toolTipAlignment.AutoAppendTextLine(localeInfo.ALIGNMENT_NAME + str(point))
+		self.toolTipAlignment.AutoAppendTextLine(localeInfo.ALIGNMENT_NAME + ": " + str(point))
 		self.toolTipAlignment.AlignHorizonalCenter()
 
 	def __ShowStatusMinusButtonList(self):
@@ -695,21 +695,22 @@ class CharacterWindow(ui.ScriptWindow):
 			for i in range(min(quest.GetQuestCount(), quest.QUEST_MAX_NUM)):
 			# END_OF_QUEST_LIMIT_COUNT_BUG_FIX
 				(lastName, lastTime) = quest.GetQuestLastTime(i)
-
 				clockText = localeInfo.QUEST_UNLIMITED_TIME
+
 				if len(lastName) > 0:
 
 					if lastTime <= 0:
 						clockText = localeInfo.QUEST_TIMEOVER
 
 					else:
-						questLastMinute = lastTime / 60
+						questLastMinute = lastTime // 60
 						questLastSecond = lastTime % 60
 
 						clockText = lastName + " : "
 
 						if questLastMinute > 0:
 							clockText += str(questLastMinute) + localeInfo.QUEST_MIN
+
 							if questLastSecond > 0:
 								clockText += " "
 
@@ -1327,7 +1328,7 @@ class CharacterWindow(ui.ScriptWindow):
 		return realSkillSlot % skill.SKILL_GRADE_STEP_COUNT
 
 	def __GetSkillGradeFromSlot(self, skillSlot):
-		return int(skillSlot / skill.SKILL_GRADE_STEP_COUNT)
+		return int(skillSlot // skill.SKILL_GRADE_STEP_COUNT)
 
 	def SelectSkillGroup(self, index):
 		self.__SelectSkillGroup(index)

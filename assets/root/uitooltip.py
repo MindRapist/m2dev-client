@@ -167,8 +167,9 @@ class ToolTip(ui.ThinBoard):
 
 	def AlignHorizonalCenter(self):
 		for child in self.childrenList:
-			(x, y)=child.GetLocalPosition()
-			child.SetPosition(self.toolTipWidth/2, y)
+			(x, y) = child.GetLocalPosition()
+
+			child.SetPosition(self.toolTipWidth // 2, y)
 
 		self.ResizeToolTip()
 
@@ -177,13 +178,15 @@ class ToolTip(ui.ThinBoard):
 			# MR-10: Fix element centering in tooltips
 			if type(child).__name__ == "TextLine" and getattr(child, "_centerAlign", False):
 				(x, y) = child.GetLocalPosition()
-				child.SetPosition(self.toolTipWidth / 2, y)
+
+				child.SetPosition(self.toolTipWidth // 2, y)
 			# MR-10: -- END OF -- Fix element centering in tooltips
 
 		self.ResizeToolTip()
 
 	def AutoAppendTextLine(self, text, color = FONT_COLOR, centerAlign = True):
 		textLine = ui.TextLine()
+
 		textLine.SetParent(self)
 		textLine.SetFontName(self.defFontName)
 		textLine.SetPackedFontColor(color)
@@ -197,7 +200,7 @@ class ToolTip(ui.ThinBoard):
 		# MR-10: -- END OF -- Fix element centering in tooltips
 
 		if centerAlign:
-			textLine.SetPosition(self.toolTipWidth/2, self.toolTipHeight)
+			textLine.SetPosition(self.toolTipWidth // 2, self.toolTipHeight)
 			textLine.SetHorizontalAlignCenter()
 
 		else:
@@ -242,7 +245,7 @@ class ToolTip(ui.ThinBoard):
 
 		if centerAlign:
 			textLine.SetHorizontalAlignCenter()
-			textLine.SetPosition(self.toolTipWidth / 2, self.toolTipHeight)
+			textLine.SetPosition(self.toolTipWidth // 2, self.toolTipHeight)
 		else:
 			textLine.SetPosition(10, self.toolTipHeight)
 
@@ -335,16 +338,16 @@ class ToolTip(ui.ThinBoard):
 			else:
 				y = mouseY - height - 30
 
-			x = mouseX - width/2				
+			x = mouseX - width // 2
 
 		else:
 
-			x = self.xPos - width/2
+			x = self.xPos - width // 2
 			y = self.yPos - height
 
 		x = max(x, 0)
 		y = max(y, 0)
-		x = min(x + width/2, wndMgr.GetScreenWidth() - width/2) - width/2
+		x = min(x + width // 2, wndMgr.GetScreenWidth() - width // 2) - width // 2
 		y = min(y + self.GetHeight(), wndMgr.GetScreenHeight()) - self.GetHeight()
 
 		parentWindow = self.GetParentProxy()
@@ -356,7 +359,6 @@ class ToolTip(ui.ThinBoard):
 		self.SetPosition(x, y)
 
 class ItemToolTip(ToolTip):
-
 	CHARACTER_NAMES = ( 
 		localeInfo.TOOLTIP_WARRIOR,
 		localeInfo.TOOLTIP_ASSASSIN,
@@ -503,6 +505,7 @@ class ItemToolTip(ToolTip):
 
 	def __init__(self, *args, **kwargs):
 		ToolTip.__init__(self, *args, **kwargs)
+
 		self.itemVnum = 0
 		self.metinSlot = []
 		self.isShopItem = False
@@ -514,14 +517,19 @@ class ItemToolTip(ToolTip):
 		self.wndDragonSoul = None
 		self.dsActivatedTimeCache = {}
 		# MR-10: Add accessorySocketTimeCache for real-time remaining time display of accessory sockets.
+
 		cache = getattr(app, "_accessorySocketTimeCache", None)
+
 		if cache is None:
 			cache = getattr(player, "_accessorySocketTimeCache", None)
 		if cache is None:
 			cache = constInfo.ACCESSORY_SOCKET_TIME_CACHE
+
 			app._accessorySocketTimeCache = cache
 			player._accessorySocketTimeCache = cache
+
 		constInfo.ACCESSORY_SOCKET_TIME_CACHE = cache
+
 		self.accessorySocketTimeCache = cache
 		# MR-10: -- END OF -- Add accessorySocketTimeCache for real-time remaining time display of accessory sockets.
 		self.hairIcon = None
@@ -535,6 +543,38 @@ class ItemToolTip(ToolTip):
 
 	def ClearDragonSoulTimeCache(self):
 		self.dsActivatedTimeCache = {}
+
+	# MR-11: Fix Dragon stones timer auto-start
+	def WarmDragonSoulTimeCache(self, slotNumbers):
+		if not slotNumbers:
+			return
+
+		now = app.GetGlobalTimeStamp()
+
+		for slotNumber in slotNumbers:
+			itemVnum = player.GetItemIndex(slotNumber)
+
+			if itemVnum == 0:
+				continue
+
+			item.SelectItem(itemVnum)
+
+			remainSec = None
+
+			for i in range(item.LIMIT_MAX_NUM):
+				(limitType, limitValue) = item.GetLimit(i)
+
+				if item.LIMIT_TIMER_BASED_ON_WEAR == limitType:
+					remainSec = player.GetItemMetinSocket(player.INVENTORY, slotNumber, 0)
+
+					break
+
+			if remainSec is None or remainSec <= 0:
+				continue
+
+			key = (itemVnum, slotNumber)
+			self.dsActivatedTimeCache[key] = { "remainSec": remainSec, "endTime": now + remainSec }
+	# MR-11: -- END OF -- Fix Dragon stones timer auto-start
 
 	def SetCannotUseItemForceSetDisableColor(self, enable):
 		self.bCannotUseItemForceSetDisableColor = enable
@@ -593,6 +633,7 @@ class ItemToolTip(ToolTip):
 
 	def AppendTextLineTime(self, endTime, getLimit):
 		color = self.FONT_COLOR
+
 		if not self.CanEquip() and self.bCannotUseItemForceSetDisableColor:
 			color = self.DISABLE_COLOR
 
@@ -1075,7 +1116,7 @@ class ItemToolTip(ToolTip):
 		## Rod ##
 		elif item.ITEM_TYPE_ROD == itemType:
 			if 0 != metinSlot:
-				curLevel = item.GetValue(0) / 10
+				curLevel = item.GetValue(0) // 10
 				curEXP = metinSlot[0]
 				maxEXP = item.GetValue(2)
 				self.__AppendLimitInformation()
@@ -1085,7 +1126,7 @@ class ItemToolTip(ToolTip):
 		elif item.ITEM_TYPE_PICK == itemType:
 
 			if 0 != metinSlot:
-				curLevel = item.GetValue(0) / 10
+				curLevel = item.GetValue(0) // 10
 				curEXP = metinSlot[0]
 				maxEXP = item.GetValue(2)
 				self.__AppendLimitInformation()
@@ -1126,7 +1167,7 @@ class ItemToolTip(ToolTip):
 				self.AppendTextLine(affectText, self.NORMAL_COLOR)
 
 				if time > 0:
-					minute = (time / 60)
+					minute = (time // 60)
 					second = (time % 60)
 					timeString = localeInfo.TOOLTIP_POTION_TIME
 
@@ -1227,9 +1268,9 @@ class ItemToolTip(ToolTip):
 						self.AppendSpace(5)
 
 						if localeMapName!="":						
-							self.AppendTextLine(localeInfo.TOOLTIP_MEMORIZED_POSITION % (localeMapName, int(xPos-xBase)/100, int(yPos-yBase)/100), self.NORMAL_COLOR)
+							self.AppendTextLine(localeInfo.TOOLTIP_MEMORIZED_POSITION % (localeMapName, int(xPos-xBase) // 100, int(yPos-yBase) // 100), self.NORMAL_COLOR)
 						else:
-							self.AppendTextLine(localeInfo.TOOLTIP_MEMORIZED_POSITION_ERROR % (int(xPos)/100, int(yPos)/100), self.NORMAL_COLOR)
+							self.AppendTextLine(localeInfo.TOOLTIP_MEMORIZED_POSITION_ERROR % (int(xPos) // 100, int(yPos) // 100), self.NORMAL_COLOR)
 							dbg.TraceError("NOT_EXIST_IN_MINIMAP_ZONE_NAME_DICT: %s" % mapName)
 
 			#####
@@ -1327,8 +1368,9 @@ class ItemToolTip(ToolTip):
 		self.ShowToolTip()
 
 	def __DragonSoulInfoString (self, dwVnum):
-		step = (dwVnum / 100) % 10
-		refine = (dwVnum / 10) % 10
+		step = (dwVnum // 100) % 10
+		refine = (dwVnum // 10) % 10
+
 		if 0 == step:
 			return localeInfo.DRAGON_SOUL_STEP_LEVEL1 + " " + localeInfo.DRAGON_SOUL_STRENGTH(refine)
 		elif 1 == step:
@@ -1377,11 +1419,11 @@ class ItemToolTip(ToolTip):
 		itemImage.Show()			
 
 		if self.__IsOldHair(itemVnum):
-			itemImage.LoadImage("d:/ymir work/item/quest/"+str(itemVnum)+".tga")
+			itemImage.LoadImage("d:/ymir work/item/quest/" + str(itemVnum) + ".tga")
 		elif self.__IsNewHair3(itemVnum):
 			itemImage.LoadImage("icon/hair/%d.sub" % (itemVnum))
 		elif self.__IsNewHair(itemVnum): # Use by linking to existing hair numbers. New items have numbers increased by 1000.
-			itemImage.LoadImage("d:/ymir work/item/quest/"+str(itemVnum-1000)+".tga")
+			itemImage.LoadImage("d:/ymir work/item/quest/" + str(itemVnum - 1000) + ".tga")
 		elif self.__IsNewHair2(itemVnum):
 			itemImage.LoadImage("icon/hair/%d.sub" % (itemVnum))
 		elif self.__IsCostumeHair(itemVnum):
@@ -1389,7 +1431,7 @@ class ItemToolTip(ToolTip):
 
 		# MR-10: Fix element centering in tooltips
 		self.hairIcon = itemImage
-		xPos = max(0, (self.toolTipWidth - itemImage.GetWidth()) / 2)
+		xPos = max(0, (self.toolTipWidth - itemImage.GetWidth()) // 2)
 
 		itemImage.SetPosition(xPos, self.toolTipHeight)
 		# MR-10: -- END OF -- Fix element centering in tooltips
@@ -1407,7 +1449,7 @@ class ItemToolTip(ToolTip):
 			return
 
 		(xPos, yPos) = self.hairIcon.GetLocalPosition()
-		xPos = max(0, (self.toolTipWidth - self.hairIcon.GetWidth()) / 2)
+		xPos = max(0, (self.toolTipWidth - self.hairIcon.GetWidth()) // 2)
 
 		self.hairIcon.SetPosition(xPos, yPos)
 	# MR-10: -- END OF -- Fix element centering in tooltips
@@ -1658,21 +1700,22 @@ class ItemToolTip(ToolTip):
 			self.AppendTextLine(localeInfo.TOOLTIP_POTION_PLUS_MOVING_SPEED % point, self.GetChangeTextLineColor(point))
 
 		if time > 0:
-			minute = (time / 60)
+			minute = (time // 60)
 			second = (time % 60)
 			timeString = localeInfo.TOOLTIP_POTION_TIME
 
 			if minute > 0:
-				timeString += str(minute) + localeInfo.TOOLTIP_POTION_MIN
+				timeString += " " + str(minute) + localeInfo.TOOLTIP_POTION_MIN
 			if second > 0:
 				timeString += " " + str(second) + localeInfo.TOOLTIP_POTION_SEC
 
 			self.AppendTextLine(timeString)
 
 	def GetPriceColor(self, price):
-		if price>=constInfo.HIGH_PRICE:
+		if price >= constInfo.HIGH_PRICE:
 			return self.HIGH_PRICE_COLOR
-		if price>=constInfo.MIDDLE_PRICE:
+
+		if price >= constInfo.MIDDLE_PRICE:
 			return self.MIDDLE_PRICE_COLOR
 		else:
 			return self.LOW_PRICE_COLOR
@@ -1733,7 +1776,7 @@ class ItemToolTip(ToolTip):
 		textLine = ui.TextLine()
 		textLine.SetParent(self)
 		textLine.SetFontName(self.defFontName)
-		textLine.SetPosition(self.toolTipWidth/2, self.toolTipHeight)
+		textLine.SetPosition(self.toolTipWidth // 2, self.toolTipHeight)
 		textLine.SetHorizontalAlignCenter()
 		textLine.SetPackedFontColor(self.NORMAL_COLOR)
 		textLine.SetText(wearNames)
@@ -1776,27 +1819,30 @@ class ItemToolTip(ToolTip):
 	def __AppendAccessoryMetinSlotInfo(self, metinSlot, mtrlVnum):		
 		ACCESSORY_SOCKET_MAX_SIZE = 3		
 
-		cur=min(metinSlot[0], ACCESSORY_SOCKET_MAX_SIZE)
-		end=min(metinSlot[1], ACCESSORY_SOCKET_MAX_SIZE)
+		cur = min(metinSlot[0], ACCESSORY_SOCKET_MAX_SIZE)
+		end = min(metinSlot[1], ACCESSORY_SOCKET_MAX_SIZE)
 
 		affectType1, affectValue1 = item.GetAffect(0)
-		affectList1=[0, max(1, affectValue1*10/100), max(2, affectValue1*20/100), max(3, affectValue1*40/100)]
+		affectList1=[0, max(1, affectValue1 * 10 // 100), max(2, affectValue1 * 20 // 100), max(3, affectValue1 * 40 // 100)]
 
 		affectType2, affectValue2 = item.GetAffect(1)
-		affectList2=[0, max(1, affectValue2*10/100), max(2, affectValue2*20/100), max(3, affectValue2*40/100)]
+		affectList2 = [0, max(1, affectValue2 * 10 // 100), max(2, affectValue2 * 20 // 100), max(3, affectValue2 * 40 // 100)]
 
-		mtrlPos=0
-		mtrlList=[mtrlVnum]*cur+[player.METIN_SOCKET_TYPE_SILVER]*(end-cur)
+		mtrlPos = 0
+		mtrlList = [mtrlVnum] * cur + [player.METIN_SOCKET_TYPE_SILVER] * (end-cur)
+
 		for mtrl in mtrlList:
-			affectString1 = self.__GetAffectString(affectType1, affectList1[mtrlPos+1]-affectList1[mtrlPos])			
-			affectString2 = self.__GetAffectString(affectType2, affectList2[mtrlPos+1]-affectList2[mtrlPos])
+			affectString1 = self.__GetAffectString(affectType1, affectList1[mtrlPos + 1] - affectList1[mtrlPos])			
+			affectString2 = self.__GetAffectString(affectType2, affectList2[mtrlPos + 1] - affectList2[mtrlPos])
 
 			leftTime = 0
-			if cur == mtrlPos+1:
-				leftTime=metinSlot[2]
+
+			if cur == mtrlPos + 1:
+				leftTime = metinSlot[2]
 
 			self.__AppendMetinSlotInfo_AppendMetinSocketData(mtrlPos, mtrl, affectString1, affectString2, leftTime)
-			mtrlPos+=1
+
+			mtrlPos += 1
 
 	def __AppendMetinSlotInfo(self, metinSlot):
 		if self.__AppendMetinSlotInfo_IsEmptySlotList(metinSlot):
@@ -1964,6 +2010,7 @@ class ItemToolTip(ToolTip):
 	def AppendUniqueItemLastTime(self, restMin):
 		if restMin > 0:
 			restSecond = restMin * 60
+
 			self.AppendSpace(5)
 			self.AppendTextLine(localeInfo.LEFT_TIME + " : " + localeInfo.RTSecondToDHMS(restSecond), self.NORMAL_COLOR)
 
@@ -1972,7 +2019,7 @@ class ItemToolTip(ToolTip):
 			self.AppendSpace(5)
 			self.AppendTextLineTime(endTime, getLimit)
 
-	def AppendTextLineTime(self, endTime, getLimit, color=FONT_COLOR):
+	def AppendTextLineTime(self, endTime, getLimit, color = FONT_COLOR):
 		leftSec = max(0, endTime - app.GetGlobalTimeStamp())
 
 		timeTextLine = ui.TextLine()
@@ -1985,7 +2032,7 @@ class ItemToolTip(ToolTip):
 
 		timeTextLine.SetOutline()
 		timeTextLine.SetFeather(False)
-		timeTextLine.SetPosition(self.toolTipWidth / 2, self.toolTipHeight)
+		timeTextLine.SetPosition(self.toolTipWidth // 2, self.toolTipHeight)
 		timeTextLine.SetHorizontalAlignCenter()
 		timeTextLine.Show()
 
@@ -2002,6 +2049,7 @@ class ItemToolTip(ToolTip):
 		if remainSec <= 0:
 			self.AppendSpace(5)
 			self.AppendTextLine(localeInfo.CANNOT_USE, self.DISABLE_COLOR)
+
 			return
 
 		isTimerActive = self.__IsTimerBasedOnWearActive()
@@ -2009,9 +2057,11 @@ class ItemToolTip(ToolTip):
 		if not isTimerActive:
 			self.AppendSpace(5)
 			self.AppendTextLine(localeInfo.LEFT_TIME + ": " + localeInfo.RTSecondToDHMS(remainSec), self.NORMAL_COLOR)
+
 			return
 
 		endTime = self.__GetOrCreateCachedEndTime(remainSec)
+
 		self.AppendMallItemLastTime(endTime, getLimit)
 
 	def __IsTimerBasedOnWearActive(self):
@@ -2067,7 +2117,8 @@ class ItemToolTip(ToolTip):
 				(limitType, limitValue) = item.GetLimit(limitIndex)
 				endTime = limitValue
 
-				self.AppendUniqueItemLastTime(endTime / 60)
+				self.AppendUniqueItemLastTime(endTime // 60)
+
 				return
 
 			endTime += app.GetGlobalTimeStamp()
@@ -2334,17 +2385,20 @@ class SkillToolTip(ToolTip):
 		conditionDataCount = skill.GetSkillConditionDescriptionCount(skillIndex)
 		if conditionDataCount > 0:
 			self.AppendSpace(5)
+
 			for i in range(conditionDataCount):
 				self.AppendTextLine(skill.GetSkillConditionDescription(skillIndex, i), self.CONDITION_COLOR)
 
 	def AppendGuildSkillData(self, skillIndex, skillLevel):
 		skillMaxLevel = 7
 		skillCurrentPercentage = float(skillLevel) / float(skillMaxLevel)
-		skillNextPercentage = float(skillLevel+1) / float(skillMaxLevel)
+		skillNextPercentage = float(skillLevel + 1) / float(skillMaxLevel)
+
 		## Current Level
 		if skillLevel > 0:
 			if self.HasSkillLevelDescription(skillIndex, skillLevel):
 				self.AppendSpace(5)
+
 				if skillLevel == skillMaxLevel:
 					self.AppendTextLine(localeInfo.TOOLTIP_SKILL_LEVEL_MASTER % (skillLevel), self.NORMAL_COLOR)
 				else:
@@ -2357,6 +2411,7 @@ class SkillToolTip(ToolTip):
 
 				## Cooltime
 				coolTime = skill.GetSkillCoolTime(skillIndex, skillCurrentPercentage)
+
 				if coolTime > 0:
 					self.AppendTextLine(localeInfo.TOOLTIP_SKILL_COOL_TIME + str(coolTime), self.ENABLE_COLOR)
 
@@ -2569,23 +2624,24 @@ class SkillToolTip(ToolTip):
 		slotIndex = player.GetSkillSlotIndex(skillIndex)
 		skillPower = player.GetSkillCurrentEfficientPercentage(slotIndex)
 		k = player.GetSkillLevel(skillIndex) / 100.0
+
 		self.AppendSpace(5)
 		self.AutoAppendTextLine(localeInfo.TOOLTIP_PARTY_SKILL_LEVEL % skillLevel, self.NORMAL_COLOR)
 
-		if skillLevel>=10:
+		if skillLevel >= 10:
 			self.AutoAppendTextLine(localeInfo.PARTY_SKILL_ATTACKER % chop( 10 + 60 * k ))
 
-		if skillLevel>=20:
+		if skillLevel >= 20:
 			self.AutoAppendTextLine(localeInfo.PARTY_SKILL_BERSERKER 	% chop(1 + 5 * k))
 			self.AutoAppendTextLine(localeInfo.PARTY_SKILL_TANKER 	% chop(50 + 1450 * k))
 
-		if skillLevel>=25:
+		if skillLevel >= 25:
 			self.AutoAppendTextLine(localeInfo.PARTY_SKILL_BUFFER % chop(5 + 45 * k ))
 
-		if skillLevel>=35:
+		if skillLevel >= 35:
 			self.AutoAppendTextLine(localeInfo.PARTY_SKILL_SKILL_MASTER % chop(25 + 600 * k ))
 
-		if skillLevel>=40:
+		if skillLevel >= 40:
 			self.AutoAppendTextLine(localeInfo.PARTY_SKILL_DEFENDER % chop( 5 + 30 * k ))
 
 		self.AlignHorizonalCenter()

@@ -4,7 +4,6 @@ import chr
 import textTail
 
 class PlayerGauge(ui.Gauge):
-
 	def __init__(self, parent):
 		ui.Gauge.__init__(self)
 		self.SetParent(parent)
@@ -29,7 +28,7 @@ class PlayerGauge(ui.Gauge):
 		(x, y, z)=textTail.GetPosition(playerIndex)
 
 		isChat = textTail.IsChat(playerIndex)
-		ui.Gauge.SetPosition(self, int(x - self.GetWidth()/2), int(y + 5) + isChat*17)
+		ui.Gauge.SetPosition(self, int(x - self.GetWidth() // 2), int(y + 5) + isChat * 17)
 
 	def RefreshGauge(self):
 
@@ -43,11 +42,11 @@ class PlayerGauge(ui.Gauge):
 		else:
 
 			if self.IsShow():
-				if self.curHP > self.maxHP / 2:
+				if self.curHP > self.maxHP // 2:
 					self.Hide()
 
 			else:
-				if self.curHP < self.maxHP / 2:
+				if self.curHP < self.maxHP // 2:
 					self.OnUpdate()
 					self.Show()
 

@@ -49,7 +49,7 @@ class LovePointImage(ui.ExpandedImageBox):
 		if 0 == self.lovePoint:
 			loveGrade = 0
 		else:
-			loveGrade = self.lovePoint // 25 + 1
+			loveGrade = self.lovePoint / 25 + 1
 		fileName = self.FILE_DICT.get(loveGrade, self.FILE_PATH+"00.dds")
 
 		try:
@@ -79,9 +79,9 @@ class HorseImage(ui.ExpandedImageBox):
 
 	FILE_DICT = {
 		00 : FILE_PATH+"00.dds",
-		1 : FILE_PATH+"00.dds",
-		2 : FILE_PATH+"00.dds",
-		3 : FILE_PATH+"00.dds",
+		0o1 : FILE_PATH+"00.dds",
+		0o2 : FILE_PATH+"00.dds",
+		0o3 : FILE_PATH+"00.dds",
 		10 : FILE_PATH+"10.dds",
 		11 : FILE_PATH+"11.dds",
 		12 : FILE_PATH+"12.dds",
@@ -107,7 +107,7 @@ class HorseImage(ui.ExpandedImageBox):
 		if 0 == level:
 			return 0
 
-		return (level-1)//10 + 1
+		return (level-1)/10 + 1
 
 	def SetState(self, level, health, battery):
 		#self.textLineList=[]
@@ -305,7 +305,7 @@ class AffectImage(ui.ExpandedImageBox):
 			
 		self.toolTipText.SetText(text)
 		w, h = self.toolTipText.GetTextSize()
-		self.toolTipText.SetPosition(max(0, x + self.GetWidth()//2 - w//2), y)
+		self.toolTipText.SetPosition(max(0, x + self.GetWidth()/2 - w/2), y)
 
 	def SetDescription(self, description):
 		self.description = description

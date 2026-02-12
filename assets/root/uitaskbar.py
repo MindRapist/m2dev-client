@@ -173,7 +173,7 @@ class EnergyBar(ui.ScriptWindow):
 	
 		if leftTime == 0:
 			self.energyEmpty.Show()
-		elif ((leftTime * 100) / maxTime) < 15:
+		elif ((leftTime * 100) // maxTime) < 15:
 			self.energyHungry.Show()
 		else:
 			self.energyFull.Show()
@@ -461,12 +461,14 @@ class TaskBar(ui.ScriptWindow):
 
 		if app.IsRTL():
 			systemButton = toggleButtonDict[TaskBar.BUTTON_SYSTEM]
+
 			if systemButton.ToolTipText:
 				tx, ty = systemButton.ToolTipText.GetLocalPosition()
 				tw = systemButton.ToolTipText.GetWidth() 
-				systemButton.ToolTipText.SetPosition(-tw/2, ty)
+				systemButton.ToolTipText.SetPosition(-tw // 2, ty)
 
 		expGauge = []
+
 		expGauge.append(self.GetChild("EXPGauge_01"))
 		expGauge.append(self.GetChild("EXPGauge_02"))
 		expGauge.append(self.GetChild("EXPGauge_03"))
@@ -726,6 +728,7 @@ class TaskBar(ui.ScriptWindow):
 
 	def SetST(self, curPoint, maxPoint):
 		curPoint = min(curPoint, maxPoint)
+
 		if maxPoint > 0:
 			self.stGauge.SetPercentage(curPoint, maxPoint)
 			self.tooltipST.SetText("%s : %d / %d" % (localeInfo.TASKBAR_ST, curPoint, maxPoint))

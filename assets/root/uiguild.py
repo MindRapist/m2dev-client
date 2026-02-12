@@ -605,7 +605,7 @@ class ChangeGradeNameDialog(ui.ScriptWindow):
 		self.gradeNameSlot.SetText("")
 		self.gradeNameSlot.SetFocus()
 		xMouse, yMouse = wndMgr.GetMousePosition()
-		self.SetPosition(xMouse - self.GetWidth()/2, yMouse + 50)
+		self.SetPosition(xMouse - self.GetWidth() / 2, yMouse + 50)
 		self.SetTop()
 		self.Show()
 	def Close(self):
@@ -1194,7 +1194,7 @@ class GuildWindow(ui.ScriptWindow):
 
 		## Passive
 		"""
-		for i in xrange(len(playerSettingModule.PASSIVE_GUILD_SKILL_INDEX_LIST)):
+		for i in range(len(playerSettingModule.PASSIVE_GUILD_SKILL_INDEX_LIST)):
 
 			slotIndex = page.passiveSlot.GetStartIndex()+i
 			skillIndex = playerSettingModule.PASSIVE_GUILD_SKILL_INDEX_LIST[i]
@@ -1398,21 +1398,26 @@ class GuildWindow(ui.ScriptWindow):
 			return
 		
 		global DISABLE_DECLARE_WAR
+
 		page = self.pageWindow["GUILD_INFO"]
+
 		page.nameSlot.SetText(guild.GetGuildName())
 		page.masterNameSlot.SetText(guild.GetGuildMasterName())
 		page.guildLevelSlot.SetText(str(guild.GetGuildLevel()))
+
 		if page.guildMoneySlot:
 			page.guildMoneySlot.SetText(str(guild.GetGuildMoney()))
 
 		curExp, lastExp = guild.GetGuildExperience()
 		curExp *= 100
 		lastExp *= 100
+
 		page.curExpSlot.SetText(str(curExp))
 		page.lastExpSlot.SetText(str(lastExp))
 
 		curMemberCount, maxMemberCount = guild.GetGuildMemberCount()
-		if maxMemberCount== 0xffff:
+
+		if maxMemberCount == 0xffff:
 			page.memberCountSlot.SetText("%d / %s " % (curMemberCount, localeInfo.GUILD_MEMBER_COUNT_INFINITY))
 		else:
 			page.memberCountSlot.SetText("%d / %d" % (curMemberCount, maxMemberCount))
@@ -2668,6 +2673,7 @@ if __name__ == "__main__":
 			material = tokens[TOKEN_MATERIAL]
 
 			folderName = ""
+
 			if "HEADQUARTER" == type:
 				folderName = "headquarter"
 			elif "FACILITY" == type:
@@ -2677,14 +2683,19 @@ if __name__ == "__main__":
 			##"BuildIn" Is made by exist instance.
 
 			materialList = ["0", "0", "0"]
+
 			if material[0] == "\"":
 				material = material[1:]
+
 			if material[-1] == "\"":
 				material = material[:-1]
+
 			for one in material.split("/"):
 				data = one.split(",")
+
 				if 2 != len(data):
 					continue
+
 				itemID = int(data[0])
 				count = data[1]
 
@@ -2717,7 +2728,7 @@ if __name__ == "__main__":
 
 		app.CloseTextFile(handle)
 
-	LoadGuildBuildingList(app.GetLocalePath()+"/GuildBuildingList.txt")
+	LoadGuildBuildingList(app.GetLocalePath() + "/GuildBuildingList.txt")
 
 	class TestGame(ui.Window):
 		def __init__(self):

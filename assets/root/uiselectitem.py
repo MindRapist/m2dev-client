@@ -84,6 +84,7 @@ class SelectItemWindow(ui.ScriptWindow):
 			slotNumber = i
 
 			itemVNum = getItemVNum(slotNumber)
+
 			if 0 == itemVNum:
 				continue
 
@@ -91,6 +92,7 @@ class SelectItemWindow(ui.ScriptWindow):
 				continue
 
 			itemGrade = player.GetItemGrade(slotNumber)
+
 			if itemGrade > 2:
 				continue
 
@@ -102,14 +104,17 @@ class SelectItemWindow(ui.ScriptWindow):
 				break
 
 		itemCount = len(self.inventorySlotPosDict)
+
 		if itemCount < 15:
 			self.SetTableSize(3)
 
 		else:
 			lineCount = 3
-			lineCount += (itemCount - 15) / 5
+			lineCount += (itemCount - 15) // 5
+
 			if itemCount % 5:
 				lineCount += 1
+
 			self.SetTableSize(lineCount)
 
 		for selectWndPos, inventoryPos in list(self.inventorySlotPosDict.items()):

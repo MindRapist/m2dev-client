@@ -108,8 +108,9 @@ class MessengerItem(ui.Window):
 	def OnRender(self):
 		if self.isSelected:
 			x, y = self.GetGlobalPosition()
+
 			grp.SetColor(grp.GenerateColor(0.0, 0.0, 0.7, 0.7))
-			grp.RenderBar(x+16, y, self.GetWidth()-16, self.GetHeight())
+			grp.RenderBar(x + 16, y, self.GetWidth() - 16, self.GetHeight())
 
 class MessengerMemberItem(MessengerItem):
 
@@ -444,12 +445,12 @@ class MessengerWindow(ui.ScriptWindow):
 		if self.isLoaded==0:
 			return
 
-		if self.showingPageSize/20 >= len(self.showingItemList):
+		if self.showingPageSize / 20 >= len(self.showingItemList):
 			self.scrollBar.Hide()
 			self.startLine = 0
 		else:
 			if self.showingItemList:
-				self.scrollBar.SetMiddleBarSize(float(self.showingPageSize/20) / float(len(self.showingItemList)))
+				self.scrollBar.SetMiddleBarSize(float(self.showingPageSize / 20) / float(len(self.showingItemList)))
 			self.scrollBar.Show()
 
 		#####
@@ -465,6 +466,7 @@ class MessengerWindow(ui.ScriptWindow):
 			item.Show()
 
 			yPos += 20
+
 			if yPos > heightLimit:
 				break
 
@@ -547,7 +549,7 @@ class MessengerWindow(ui.ScriptWindow):
 		self.OnCloseQuestionDialog()
 
 	def OnScroll(self):
-		scrollLineCount = len(self.showingItemList) - (self.showingPageSize/20)
+		scrollLineCount = len(self.showingItemList) - (self.showingPageSize / 20)
 		startLine = int(scrollLineCount * self.scrollBar.GetPos())
 
 		if startLine != self.startLine:

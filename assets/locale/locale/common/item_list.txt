@@ -1,4 +1,5 @@
 1	ETC	icon/item/money.tga	d:/ymir work/item/etc/money.gr2
+2	ETC	icon/item/dummy.tga
 10	WEAPON	icon/item/00010.tga	d:/ymir work/item/weapon/00010.gr2
 11	WEAPON	icon/item/00010.tga	d:/ymir work/item/weapon/00010.gr2
 12	WEAPON	icon/item/00010.tga	d:/ymir work/item/weapon/00010.gr2
@@ -1410,6 +1411,21 @@
 9505	WEAPON	icon/item/07000.tga	d:/ymir work/item/weapon/07000.gr2
 50201	WEAPON	icon/item/50201.tga	d:/ymir work/item/weapon/buke.gr2
 50202	WEAPON	icon/item/50201.tga	d:/ymir work/item/weapon/buke.gr2
+29001	ETC	icon/item/dummy.tga
+29002	ETC	icon/item/dummy.tga
+29003	ETC	icon/item/dummy.tga
+29004	ETC	icon/item/dummy.tga
+29005	ETC	icon/item/dummy.tga
+29006	ETC	icon/item/dummy.tga
+29007	ETC	icon/item/dummy.tga
+29008	ETC	icon/item/dummy.tga
+29009	ETC	icon/item/dummy.tga
+29010	ETC	icon/item/dummy.tga
+29011	ETC	icon/item/dummy.tga
+29012	ETC	icon/item/dummy.tga
+29013	ETC	icon/item/dummy.tga
+29014	ETC	icon/item/dummy.tga
+29015	ETC	icon/item/dummy.tga
 29101	WEAPON	icon/item/29101.tga	d:/ymir work/item/etc/digger_1.gr2
 29102	WEAPON	icon/item/29101.tga	d:/ymir work/item/etc/digger_1.gr2
 29103	WEAPON	icon/item/29101.tga	d:/ymir work/item/etc/digger_1.gr2
@@ -2296,6 +2312,16 @@
 13167	ARMOR	icon/item/13160.tga	
 13168	ARMOR	icon/item/13160.tga	
 13169	ARMOR	icon/item/13160.tga	
+13180	ARMOR	icon/item/dummy.tga	
+13181	ARMOR	icon/item/dummy.tga	
+13182	ARMOR	icon/item/dummy.tga	
+13183	ARMOR	icon/item/dummy.tga	
+13184	ARMOR	icon/item/dummy.tga	
+13185	ARMOR	icon/item/dummy.tga	
+13186	ARMOR	icon/item/dummy.tga	
+13187	ARMOR	icon/item/dummy.tga	
+13188	ARMOR	icon/item/dummy.tga	
+13189	ARMOR	icon/item/dummy.tga	
 14000	ARMOR	icon/item/14000.tga
 14001	ARMOR	icon/item/14000.tga
 14002	ARMOR	icon/item/14000.tga
@@ -3380,6 +3406,10 @@
 22000	ETC	icon/item/22000.tga
 22010	ETC	icon/item/22000.tga
 22011	ETC	icon/item/22000.tga
+22020	ETC	icon/item/dummy.tga
+22030	ETC	icon/item/dummy.tga
+22040	ETC	icon/item/dummy.tga
+22050	ETC	icon/item/dummy.tga
 25040	ETC	icon/item/25040.tga
 25041	ETC	icon/item/30064.tga
 25100	ETC	icon/item/25000.tga
@@ -3890,7 +3920,24 @@
 30097	ETC	icon/item/30096.tga
 30101	ETC	season1/icon/item/30101.tga
 30102	ETC	season1/icon/item/30102.tga
+30101	ETC	icon/item/30101.tga
+30102	ETC	icon/item/30102.tga
+30103	ETC	icon/item/dummy.tga
+30104	ETC	icon/item/dummy.tga
+30105	ETC	icon/item/dummy.tga
+30106	ETC	icon/item/dummy.tga
+30107	ETC	icon/item/dummy.tga
+30108	ETC	icon/item/dummy.tga
+30109	ETC	icon/item/dummy.tga
+30110	ETC	icon/item/dummy.tga
+30111	ETC	icon/item/dummy.tga
+30112	ETC	icon/item/dummy.tga
+30113	ETC	icon/item/dummy.tga
+30114	ETC	season1/icon/item/30152.tga
+30115	ETC	icon/item/dummy.tga
 30116	ETC	season1/icon/item/30116.tga
+30117	ETC	icon/item/dummy.tga
+30118	ETC	icon/item/dummy.tga
 30129	ETC	icon/item/30129.tga
 30130	ETC	icon/item/30130.tga
 30131	ETC	icon/item/30131.tga
@@ -4013,6 +4060,9 @@
 40002	ETC	icon/item/40002.tga
 40003	ETC	icon/item/40003.tga
 40004	ETC	icon/item/40004.tga
+40005	ETC	icon/item/dummy.tga
+40006	ETC	icon/item/dummy.tga
+40007	ETC	icon/item/dummy.tga
 41311	ETC	icon/item/41311.tga	
 41312	ETC	icon/item/41312.tga	
 41313	ETC	icon/item/41311.tga	
@@ -4057,6 +4107,7 @@
 50038	ETC	season1/icon/item/50038.tga
 50039	ETC	season1/icon/item/50039.tga
 50040	ETC	season1/icon/item/50040.tga
+50041	ETC	season1/icon/item/50040.tga
 50042	ETC	icon/item/50042.tga	
 50050	ETC	icon/item/50050.tga
 50051	ETC	icon/item/50051.tga
@@ -4070,6 +4121,7 @@
 50059	ETC	icon/item/50059.tga
 50060	ETC	icon/item/book_44.tga
 50061	ETC	season1/icon/item/50061.tga
+50062	ETC	icon/item/dummy.tga
 50070	ETC	icon/item/boss_box.tga	d:/ymir work/item/etc/boss_box.gr2
 50071	ETC	icon/item/boss_box.tga	d:/ymir work/item/etc/boss_box.gr2
 50072	ETC	icon/item/boss_box.tga	d:/ymir work/item/etc/boss_box.gr2
@@ -4298,6 +4350,14 @@
 50802	ETC	season1/icon/item/50802.tga
 50803	ETC	season1/icon/item/50803.tga
 50804	ETC	season1/icon/item/50804.tga
+50805	ETC	icon/item/dummy.tga
+50806	ETC	icon/item/dummy.tga
+50807	ETC	icon/item/dummy.tga
+50808	ETC	icon/item/dummy.tga
+50809	ETC	icon/item/dummy.tga
+50810	ETC	icon/item/dummy.tga
+50811	ETC	icon/item/dummy.tga
+50812	ETC	icon/item/dummy.tga
 50813	ETC	season1/icon/item/50813.tga
 50814	ETC	season1/icon/item/50814.tga
 50815	ETC	season1/icon/item/50815.tga
@@ -4309,6 +4369,12 @@
 50902	ETC	season1/icon/item/50902.tga
 50903	ETC	season1/icon/item/50903.tga
 50904	ETC	season1/icon/item/50904.tga
+50905	ETC	icon/item/dummy.tga
+50906	ETC	icon/item/dummy.tga
+50907	ETC	icon/item/dummy.tga
+50908	ETC	icon/item/dummy.tga
+50909	ETC	icon/item/dummy.tga
+50910	ETC	icon/item/dummy.tga
 53001	ETC	icon/item/53001.tga
 53003	ETC	icon/item/53003.tga
 53501	ETC	icon/item/53501.tga	
@@ -4388,6 +4454,7 @@
 70054	ETC	icon/item/30007.tga
 70101	ETC	icon/item/70101.tga
 70102	ETC	icon/item/70102.tga
+70103	ETC	icon/item/dummy.tga
 70104	ETC	icon/item/70104.tga
 70105	ETC	icon/item/70105.tga
 70106	ETC	icon/item/70106.tga
@@ -4421,6 +4488,7 @@
 71032	ETC	icon/item/71032.tga
 71011	ETC	icon/item/70002.tga
 71034	ETC	icon/item/27102.tga
+71035	ETC	icon/item/71035.tga
 71036	ETC	icon/item/71036.tga
 71037	ETC	icon/item/71036.tga
 71038	ETC	icon/item/71036.tga
@@ -4430,7 +4498,6 @@
 71042	ETC	icon/item/71036.tga
 71043	ETC	icon/item/71036.tga
 71046	ETC	icon/item/25000.tga
-71048	ETC	icon/item/22000.tga
 71051	ETC	icon/item/71051.tga
 71052	ETC	icon/item/71052.tga
 71053	ETC	icon/item/70050.tga
@@ -4460,9 +4527,12 @@
 71028	ETC	icon/item/71028.tga
 71029	ETC	icon/item/71029.tga
 71030	ETC	icon/item/71030.tga
+71031	ETC	icon/item/71030.tga
+71033	ETC	icon/item/71011.tga
 71035	ETC	season1/icon/item/71035.tga
 71044	ETC	icon/item/71044.tga
 71045	ETC	icon/item/71045.tga
+71047	ETC	icon/item/dummy.tga
 71048	ETC	icon/item/71048.tga	
 71049	ETC	icon/item/71049.tga
 71050	ETC	icon/item/27103.tga
@@ -4490,6 +4560,7 @@
 71083	ETC	icon/item/71083.tga
 71084	ETC	icon/item/71084.tga
 71085	ETC	icon/item/71085.tga
+71091	ETC	icon/item/dummy.tga
 71094	ETC	icon/item/71094.tga
 71095	ETC	season1/icon/item/71095.tga
 71096	ETC	season1/icon/item/71096.tga
@@ -4552,6 +4623,9 @@
 72007	ETC	icon/item/71049.tga
 72008	ETC	icon/item/71049.tga
 72009	ETC	icon/item/71049.tga
+72010	ETC	icon/item/dummy.tga
+72011	ETC	icon/item/dummy.tga
+72012	ETC	icon/item/dummy.tga
 72013	ETC	icon/item/71008.tga
 72014	ETC	icon/item/71008.tga
 72015	ETC	icon/item/71008.tga
@@ -4592,6 +4666,70 @@
 72048	ETC	icon/item/71044.tga
 72049	ETC	season1/icon/item/72049.tga
 72050	ETC	season1/icon/item/72049.tga
+72051	ETC	icon/item/71036.tga
+72052	ETC	icon/item/71036.tga
+72053	ETC	icon/item/72053.tga
+72054	ETC	icon/item/72054.tga
+72057	ETC	icon/item/70005.tga
+72058	ETC	icon/item/27999.tga
+72059	ETC	icon/item/72059.tga
+72060	ETC	icon/item/72060.tga
+72061	ETC	icon/item/72061.tga
+72062	ETC	icon/item/72062.tga
+72063	ETC	icon/item/71080.tga
+72064	ETC	icon/item/72064.tga
+72065	ETC	icon/item/72064.tga
+72066	ETC	icon/item/72064.tga
+72067	ETC	icon/item/72064.tga
+72068	ETC	icon/item/72068.tga
+72069	ETC	icon/item/72069.tga
+72070	ETC	icon/item/72070.tga
+72071	ETC	icon/item/72071.tga
+72072	ETC	icon/item/27999.tga
+72301	ETC	icon/item/25040.tga
+72302	ETC	icon/item/70003.tga
+72303	ETC	icon/item/70005.tga
+72304	ETC	icon/item/70024.tga
+72305	ETC	icon/item/70026.tga
+72306	ETC	icon/item/70027.tga
+72307	ETC	icon/item/70028.tga
+72308	ETC	icon/item/70035.tga
+72309	ETC	icon/item/70039.tga
+72310	ETC	icon/item/71001.tga
+72311	ETC	icon/item/71020.tga
+72312	ETC	icon/item/71028.tga
+72313	ETC	icon/item/71030.tga
+72314	ETC	icon/item/76009.tga
+72319	ETC	icon/item/72319.tga
+72320	ETC	icon/item/72320.tga
+72321	ETC	icon/item/72321.tga
+72322	ETC	icon/item/72322.tga
+72323	ETC	icon/item/72323.tga
+72325	ETC	icon/item/72325.tga
+72326	ETC	icon/item/72326.tga
+72327	ETC	icon/item/72327.tga
+72328	ETC	icon/item/72328.tga
+72329	ETC	icon/item/72327.tga
+72339	ETC	icon/item/71080.tga
+72340	ETC	icon/item/72340.tga
+72341	ETC	icon/item/72326.tga
+72342	ETC	icon/item/71095.tga
+72343	ETC	icon/item/72343.tga
+72344	ETC	icon/item/72344.tga
+72346	ETC	icon/item/72346.tga
+72347	ETC	icon/item/72347.tga
+72348	ETC	icon/item/72347.tga
+72349	ETC	icon/item/72347.tga
+72350	ETC	icon/item/72350.tga
+72351	ETC	icon/item/72351.tga
+72352	ETC	icon/item/72352.tga
+72353	ETC	icon/item/72353.tga
+72354	ETC	icon/item/70068.tga
+72355	ETC	icon/item/72355.tga
+72356	ETC	icon/item/72355.tga
+72359	ETC	icon/item/72359.tga
+72360	ETC	icon/item/72360.tga
+72361	ETC	icon/item/71080.tga
 72701	ETC	season1/icon/item/72701.tga
 72702	ETC	season1/icon/item/72701.tga
 72703	ETC	icon/item/72703.tga	
@@ -4825,9 +4963,18 @@
 75618	ETC	icon/item/73751.tga	
 75619	ETC	icon/item/73751.tga
 75620	ETC	icon/item/73751.tga	
+80002	ETC	icon/item/dummy.tga
 80003	ETC	icon/item/80003.tga
 80004	ETC	icon/item/80004.tga
 80008	ETC	icon/item/80008.tga
+9000	ETC	icon/item/809000010.tga
+90001	ETC	icon/item/dummy.tga
+90002	ETC	icon/item/dummy.tga
+90003	ETC	icon/item/dummy.tga
+90004	ETC	icon/item/dummy.tga
+90005	ETC	icon/item/dummy.tga
+90006	ETC	icon/item/dummy.tga
+90007	ETC	icon/item/dummy.tga
 90008	ETC	icon/item/70010.tga
 90009	ETC	icon/item/90009.tga
 90010	ETC	icon/item/90010.tga
@@ -5022,6 +5169,15 @@
 38100	ETC	season1/icon/item/50709.tga
 38101	ETC	season1/icon/item/50709.tga
 38102	ETC	season1/icon/item/50709.tga
+38001	ETC	icon/item/dummy.tga
+38002	ETC	icon/item/dummy.tga
+38003	ETC	icon/item/dummy.tga
+38004	ETC	icon/item/dummy.tga
+38005	ETC	icon/item/dummy.tga
+38006	ETC	icon/item/dummy.tga
+38007	ETC	icon/item/80016.tga
+38008	ETC	icon/item/38008.tga
+38009	ETC	icon/item/38009.tga
 38010	ETC	icon/item/money.tga	d:/ymir work/item/etc/money.gr2
 38011	ETC	icon/item/money.tga	d:/ymir work/item/etc/money.gr2
 41003	ARMOR	icon/item/41003.tga
@@ -5151,6 +5307,18 @@
 76024	ETC	icon/item/76024.tga
 53005	ETC	icon/item/53005.tga
 53505	ETC	icon/item/53501.tga
+53506	ETC	icon/item/53501.tga
+53507	ETC	icon/item/53501.tga
+53508	ETC	icon/item/53501.tga
+53509	ETC	icon/item/53501.tga
+53510	ETC	icon/item/53501.tga
+53511	ETC	icon/item/53501.tga
+53512	ETC	icon/item/53501.tga
+53513	ETC	icon/item/53501.tga
+53514	ETC	icon/item/53501.tga
+53515	ETC	icon/item/53501.tga
+53516	ETC	icon/item/53501.tga
+53517	ETC	icon/item/53501.tga
 70058	ETC	icon/item/70058.tga
 71151	ETC	icon/item/71151.tga
 71152	ETC	icon/item/71152.tga
@@ -6225,6 +6393,11 @@
 41308	ETC	icon/item/41308.tga
 41309	ETC	icon/item/41307.tga
 41310	ETC	icon/item/41308.tga
+41315	ETC	icon/item/41315.tga
+41316	ETC	icon/item/41316.tga
+41317	ETC	icon/item/41315.tga
+41318	ETC	icon/item/41316.tga
+41319	ETC	icon/item/41308.tga
 41320	ETC	icon/item/41320.tga
 41321	ETC	icon/item/41321.tga
 41322	ETC	icon/item/41320.tga

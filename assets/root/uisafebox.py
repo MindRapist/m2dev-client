@@ -312,9 +312,11 @@ class SafeboxWindow(ui.ScriptWindow):
 		self.pageButtonList = []
 
 		text = "I"
-		pos = -int(float(pageCount-1)/2 * 52)
+		pos = -int(float(pageCount-1) / 2 * 52)
+
 		for i in range(pageCount):
 			button = ui.RadioButton()
+
 			button.SetParent(self)
 			button.SetUpVisual("d:/ymir work/ui/game/windows/tab_button_middle_01.sub")
 			button.SetOverVisual("d:/ymir work/ui/game/windows/tab_button_middle_02.sub")
@@ -325,6 +327,7 @@ class SafeboxWindow(ui.ScriptWindow):
 			button.SetText(text)
 			button.SetEvent(lambda arg=i: self.SelectPage(arg))
 			button.Show()
+
 			self.pageButtonList.append(button)
 
 			pos += 52
@@ -343,11 +346,11 @@ class SafeboxWindow(ui.ScriptWindow):
 		self.RefreshSafebox()
 
 	def __LocalPosToGlobalPos(self, local):
-		return self.curPageIndex*safebox.SAFEBOX_PAGE_SIZE + local
+		return self.curPageIndex * safebox.SAFEBOX_PAGE_SIZE + local
 
 	def SetTableSize(self, size):
 
-		pageCount = max(1, size / safebox.SAFEBOX_SLOT_Y_COUNT)
+		pageCount = max(1, size // safebox.SAFEBOX_SLOT_Y_COUNT)
 		pageCount = min(3, pageCount)
 		size = safebox.SAFEBOX_SLOT_Y_COUNT
 
@@ -358,6 +361,7 @@ class SafeboxWindow(ui.ScriptWindow):
 		self.wndItem.SetSlotBaseImage("d:/ymir work/ui/public/Slot_Base.sub", 1.0, 1.0, 1.0, 1.0)
 
 		wnd_height = 130 + 32 * size
+
 		self.wndBoard.SetSize(self.BOX_WIDTH, wnd_height)
 		self.SetSize(self.BOX_WIDTH, wnd_height)
 		self.UpdateRect()
@@ -422,6 +426,7 @@ class SafeboxWindow(ui.ScriptWindow):
 				#snd.PlaySound("sound/ui/drop.wav")
 			else:
 				attachedInvenType = player.SlotTypeToInvenType(attachedSlotType)
+
 				if player.RESERVED_WINDOW == attachedInvenType:
 					return
 					
@@ -429,18 +434,15 @@ class SafeboxWindow(ui.ScriptWindow):
 					net.SendSafeboxSaveMoneyPacket(mouseModule.mouseController.GetAttachedItemCount())
 					snd.PlaySound("sound/ui/money.wav")
 				else:
-					chat
 					net.SendSafeboxCheckinPacket(attachedInvenType, attachedSlotPos, selectedSlotPos)
 					#snd.PlaySound("sound/ui/drop.wav")
 			
 			mouseModule.mouseController.DeattachObject()
 
 	def SelectItemSlot(self, selectedSlotPos):
-
 		selectedSlotPos = self.__LocalPosToGlobalPos(selectedSlotPos)
 
 		if mouseModule.mouseController.isAttached():
-
 			attachedSlotType = mouseModule.mouseController.GetAttachedType()
 
 			if player.SLOT_TYPE_INVENTORY == attachedSlotType:
@@ -459,6 +461,7 @@ class SafeboxWindow(ui.ScriptWindow):
 		else:
 
 			curCursorNum = app.GetCursor()
+
 			if app.SELL == curCursorNum:
 				chat.AppendChat(chat.CHAT_TYPE_INFO, localeInfo.SAFEBOX_SELL_DISABLE_SAFEITEM)
 
@@ -580,7 +583,7 @@ class MallWindow(ui.ScriptWindow):
 
 	def SetTableSize(self, size):
 
-		pageCount = max(1, size / safebox.SAFEBOX_SLOT_Y_COUNT)
+		pageCount = max(1, size // safebox.SAFEBOX_SLOT_Y_COUNT)
 		pageCount = min(3, pageCount)
 		size = safebox.SAFEBOX_SLOT_Y_COUNT
 
@@ -588,20 +591,22 @@ class MallWindow(ui.ScriptWindow):
 		self.wndItem.RefreshSlot()
 		self.wndItem.SetSlotBaseImage("d:/ymir work/ui/public/Slot_Base.sub", 1.0, 1.0, 1.0, 1.0)
 
-		self.wndBoard.SetSize(self.BOX_WIDTH, 82 + 32*size)
-		self.SetSize(self.BOX_WIDTH, 85 + 32*size)
+		self.wndBoard.SetSize(self.BOX_WIDTH, 82 + 32 * size)
+		self.SetSize(self.BOX_WIDTH, 85 + 32 * size)
 		self.UpdateRect()
 
 	def RefreshMall(self):
-		getItemID=safebox.GetMallItemID
-		getItemCount=safebox.GetMallItemCount
-		setItemID=self.wndItem.SetItemSlot
+		getItemID = safebox.GetMallItemID
+		getItemCount = safebox.GetMallItemCount
+		setItemID = self.wndItem.SetItemSlot
 
 		for i in range(safebox.GetMallSize()):
 			itemID = getItemID(i)
 			itemCount = getItemCount(i)
+
 			if itemCount <= 1:
 				itemCount = 0
+
 			setItemID(i, itemID, itemCount)
 
 		self.wndItem.RefreshSlot()

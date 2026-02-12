@@ -822,7 +822,7 @@ TOOLTIP_MAX_SP	نقاط الأسلوب القصوى +%d	SA
 TOOLTIP_MAX_SP_PCT	نقاط الأسلوب القصوى +%d%%	SA
 TOOLTIP_MAX_STAMINA	مدة التحمل القصوى +%d	SA
 TOOLTIP_MELEE_MAGIC_ATTBONUS_PER	هجوم سحري/قتال عن قرب +%d%%	SA
-TOOLTIP_MEMORIZED_POSITION	%s(%d، %d)
+TOOLTIP_MEMORIZED_POSITION	%s (%d، %d)
 TOOLTIP_MEMORIZED_POSITION_ERROR	خطأ GPS(%d, %d)
 TOOLTIP_MOV_SPEED	سرعة التحرك %d%%	SA
 TOOLTIP_NECK	قلادة

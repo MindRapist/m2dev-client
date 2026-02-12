@@ -177,7 +177,7 @@ class AtlasWindow(ui.ScriptWindow):
 		ui.ScriptWindow.Show(self)
 
 	def SetCenterPositionAdjust(self, x, y):
-		self.SetPosition((wndMgr.GetScreenWidth() - self.GetWidth()) / 2 + x, (wndMgr.GetScreenHeight() - self.GetHeight()) / 2 + y)
+		self.SetPosition((wndMgr.GetScreenWidth() - self.GetWidth()) // 2 + x, (wndMgr.GetScreenHeight() - self.GetHeight()) // 2 + y)
 
 	def OnPressEscapeKey(self):
 		self.Hide()
@@ -385,24 +385,26 @@ class MiniMap(ui.ScriptWindow):
 		(x, y, z) = player.GetMainCharacterPosition()
 		miniMap.Update(x, y)
 
-		self.positionInfo.SetText("(%.0f, %.0f)" % (x/100, y/100))
+		self.positionInfo.SetText("(%.0f, %.0f)" % (x // 100, y // 100))
 
 		if self.tooltipInfo:
 			if True == self.MiniMapWindow.IsIn():
 				(mouseX, mouseY) = wndMgr.GetMousePosition()
 				(bFind, sName, iPosX, iPosY, dwTextColor) = miniMap.GetInfo(mouseX, mouseY)
+
 				if bFind == 0:
 					self.tooltipInfo.Hide()
 				elif not self.canSeeInfo:
-					self.tooltipInfo.SetText("%s(%s)" % (sName, localeInfo.UI_POS_UNKNOWN))
+					self.tooltipInfo.SetText("%s (%s)" % (sName, localeInfo.UI_POS_UNKNOWN))
 					self.tooltipInfo.SetTooltipPosition(mouseX - 5, mouseY)
 					self.tooltipInfo.SetTextColor(dwTextColor)
 					self.tooltipInfo.Show()
 				else:
 					if app.IsRTL() and sName[-1].isalnum():
-						self.tooltipInfo.SetText("(%s)%d, %d" % (sName, iPosX, iPosY))
+						self.tooltipInfo.SetText("(%s) %d, %d" % (sName, iPosX, iPosY))
 					else:
-						self.tooltipInfo.SetText("%s(%d, %d)" % (sName, iPosX, iPosY))
+						self.tooltipInfo.SetText("%s (%d, %d)" % (sName, iPosX, iPosY))
+
 					self.tooltipInfo.SetTooltipPosition(mouseX - 5, mouseY)
 					self.tooltipInfo.SetTextColor(dwTextColor)
 					self.tooltipInfo.Show()

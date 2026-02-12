@@ -192,7 +192,7 @@ class OptionDialog(ui.ScriptWindow):
 		self.selectMusicFile.SetText(fileName[:MUSIC_FILENAME_MAX_LEN])
 
 		if musicInfo.fieldMusic != "":
-			snd.FadeOutMusic("BGM/"+ musicInfo.fieldMusic)
+			snd.FadeOutMusic("BGM/" + musicInfo.fieldMusic)
 
 		if fileName==uiSelectMusic.DEFAULT_THEMA:
 			musicInfo.fieldMusic=musicInfo.METIN2THEMA

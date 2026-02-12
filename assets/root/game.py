@@ -81,7 +81,7 @@ class GameWindow(ui.ScriptWindow):
 		self.affectShower = None
 		self.playerGauge = None
 
-		self.stream=stream
+		self.stream = stream
 		self.interface = interfaceModule.Interface()
 		self.interface.MakeInterface()
 		self.interface.ShowDefaultWindows()
@@ -226,7 +226,7 @@ class GameWindow(ui.ScriptWindow):
 		(cameraDistance, cameraPitch, cameraRotation, cameraHeight) = app.GetCamera()
 
 		if musicInfo.fieldMusic != "":
-			snd.FadeOutMusic("BGM/"+ musicInfo.fieldMusic)
+			snd.FadeOutMusic("BGM/" + musicInfo.fieldMusic)
 
 		self.onPressKeyDict = None
 		self.onClickKeyDict = None
@@ -306,43 +306,43 @@ class GameWindow(ui.ScriptWindow):
 		
 		## Used for number shortcut quickslots (subsequent numbers also reserved for quickslots)
 		## F12 is client debug key, should not be used here.
-		onPressKeyDict[app.DIK_1]	= lambda : self.__PressNumKey(1)
-		onPressKeyDict[app.DIK_2]	= lambda : self.__PressNumKey(2)
-		onPressKeyDict[app.DIK_3]	= lambda : self.__PressNumKey(3)
-		onPressKeyDict[app.DIK_4]	= lambda : self.__PressNumKey(4)
-		onPressKeyDict[app.DIK_5]	= lambda : self.__PressNumKey(5)
-		onPressKeyDict[app.DIK_6]	= lambda : self.__PressNumKey(6)
-		onPressKeyDict[app.DIK_7]	= lambda : self.__PressNumKey(7)
-		onPressKeyDict[app.DIK_8]	= lambda : self.__PressNumKey(8)
-		onPressKeyDict[app.DIK_9]	= lambda : self.__PressNumKey(9)
-		onPressKeyDict[app.DIK_F1]	= lambda : self.__PressQuickSlot(4)
-		onPressKeyDict[app.DIK_F2]	= lambda : self.__PressQuickSlot(5)
-		onPressKeyDict[app.DIK_F3]	= lambda : self.__PressQuickSlot(6)
-		onPressKeyDict[app.DIK_F4]	= lambda : self.__PressQuickSlot(7)
+		onPressKeyDict[app.DIK_1]	= lambda: self.__PressNumKey(1)
+		onPressKeyDict[app.DIK_2]	= lambda: self.__PressNumKey(2)
+		onPressKeyDict[app.DIK_3]	= lambda: self.__PressNumKey(3)
+		onPressKeyDict[app.DIK_4]	= lambda: self.__PressNumKey(4)
+		onPressKeyDict[app.DIK_5]	= lambda: self.__PressNumKey(5)
+		onPressKeyDict[app.DIK_6]	= lambda: self.__PressNumKey(6)
+		onPressKeyDict[app.DIK_7]	= lambda: self.__PressNumKey(7)
+		onPressKeyDict[app.DIK_8]	= lambda: self.__PressNumKey(8)
+		onPressKeyDict[app.DIK_9]	= lambda: self.__PressNumKey(9)
+		onPressKeyDict[app.DIK_F1]	= lambda: self.__PressQuickSlot(4)
+		onPressKeyDict[app.DIK_F2]	= lambda: self.__PressQuickSlot(5)
+		onPressKeyDict[app.DIK_F3]	= lambda: self.__PressQuickSlot(6)
+		onPressKeyDict[app.DIK_F4]	= lambda: self.__PressQuickSlot(7)
 
-		onPressKeyDict[app.DIK_LALT]		= lambda : self.ShowName()
-		onPressKeyDict[app.DIK_LCONTROL]	= lambda : self.ShowMouseImage()
-		onPressKeyDict[app.DIK_SYSRQ]		= lambda : self.SaveScreen()
-		onPressKeyDict[app.DIK_SPACE]		= lambda : self.StartAttack()
+		onPressKeyDict[app.DIK_LALT]		= lambda: self.ShowName()
+		onPressKeyDict[app.DIK_LCONTROL]	= lambda: self.ShowMouseImage()
+		onPressKeyDict[app.DIK_SYSRQ]		= lambda: self.SaveScreen()
+		onPressKeyDict[app.DIK_SPACE]		= lambda: self.StartAttack()
 
 		#Character movement keys
-		onPressKeyDict[app.DIK_UP]			= lambda : self.MoveUp()
-		onPressKeyDict[app.DIK_DOWN]		= lambda : self.MoveDown()
-		onPressKeyDict[app.DIK_LEFT]		= lambda : self.MoveLeft()
-		onPressKeyDict[app.DIK_RIGHT]		= lambda : self.MoveRight()
-		onPressKeyDict[app.DIK_W]			= lambda : self.MoveUp()
-		onPressKeyDict[app.DIK_S]			= lambda : self.MoveDown()
-		onPressKeyDict[app.DIK_A]			= lambda : self.MoveLeft()
+		onPressKeyDict[app.DIK_UP]			= lambda: self.MoveUp()
+		onPressKeyDict[app.DIK_DOWN]		= lambda: self.MoveDown()
+		onPressKeyDict[app.DIK_LEFT]		= lambda: self.MoveLeft()
+		onPressKeyDict[app.DIK_RIGHT]		= lambda: self.MoveRight()
+		onPressKeyDict[app.DIK_W]			= lambda: self.MoveUp()
+		onPressKeyDict[app.DIK_S]			= lambda: self.MoveDown()
+		onPressKeyDict[app.DIK_A]			= lambda: self.MoveLeft()
 		# MR-3: Keyboard-enabled deck toggling
-		onPressKeyDict[app.DIK_D]			= lambda : self.__PressDKey()
+		onPressKeyDict[app.DIK_D]			= lambda: self.__PressDKey()
 		# MR-3: -- END OF -- Keyboard-enabled deck toggling
 
 		onPressKeyDict[app.DIK_E]			= lambda: app.RotateCamera(app.CAMERA_TO_POSITIVE)
 		onPressKeyDict[app.DIK_R]			= lambda: app.ZoomCamera(app.CAMERA_TO_NEGATIVE)
 		#onPressKeyDict[app.DIK_F]			= lambda: app.ZoomCamera(app.CAMERA_TO_POSITIVE)
 		onPressKeyDict[app.DIK_T]			= lambda: app.PitchCamera(app.CAMERA_TO_NEGATIVE)
-		onPressKeyDict[app.DIK_G]			= self.__PressGKey
-		onPressKeyDict[app.DIK_Q]			= self.__PressQKey
+		onPressKeyDict[app.DIK_G]			= lambda: self.__PressGKey()
+		onPressKeyDict[app.DIK_Q]			= lambda: self.__PressQKey()
 
 		onPressKeyDict[app.DIK_NUMPAD9]		= lambda: app.MovieResetCamera()
 		onPressKeyDict[app.DIK_NUMPAD4]		= lambda: app.MovieRotateCamera(app.CAMERA_TO_NEGATIVE)
@@ -351,28 +351,28 @@ class GameWindow(ui.ScriptWindow):
 		onPressKeyDict[app.DIK_PGDN]		= lambda: app.MovieZoomCamera(app.CAMERA_TO_POSITIVE)
 		onPressKeyDict[app.DIK_NUMPAD8]		= lambda: app.MoviePitchCamera(app.CAMERA_TO_NEGATIVE)
 		onPressKeyDict[app.DIK_NUMPAD2]		= lambda: app.MoviePitchCamera(app.CAMERA_TO_POSITIVE)
-		onPressKeyDict[app.DIK_GRAVE]		= lambda : self.PickUpItem()
-		onPressKeyDict[app.DIK_Z]			= lambda : self.PickUpItem()
+		onPressKeyDict[app.DIK_GRAVE]		= lambda: self.PickUpItem()
+		onPressKeyDict[app.DIK_Z]			= lambda: self.PickUpItem()
 		# MR-3: Keyboard-enabled deck toggling
-		onPressKeyDict[app.DIK_C]			= lambda : self.__PressCKey()
+		onPressKeyDict[app.DIK_C]			= lambda: self.__PressCKey()
 		# MR-3: -- END OF -- Keyboard-enabled deck toggling
 		onPressKeyDict[app.DIK_V]			= lambda state = "SKILL": self.interface.ToggleCharacterWindow(state)
 		#onPressKeyDict[app.DIK_B]			= lambda state = "EMOTICON": self.interface.ToggleCharacterWindow(state)
 		onPressKeyDict[app.DIK_N]			= lambda state = "QUEST": self.interface.ToggleCharacterWindow(state)
-		onPressKeyDict[app.DIK_I]			= lambda : self.interface.ToggleInventoryWindow()
-		onPressKeyDict[app.DIK_O]			= lambda : self.interface.ToggleDragonSoulWindowWithNoInfo()
-		onPressKeyDict[app.DIK_M]			= lambda : self.interface.PressMKey()
-		#onPressKeyDict[app.DIK_H]			= lambda : self.interface.OpenHelpWindow()
-		onPressKeyDict[app.DIK_ADD]			= lambda : self.interface.MiniMapScaleUp()
-		onPressKeyDict[app.DIK_SUBTRACT]	= lambda : self.interface.MiniMapScaleDown()
-		onPressKeyDict[app.DIK_L]			= lambda : self.interface.ToggleChatLogWindow()
-		onPressKeyDict[app.DIK_COMMA]		= lambda : self.ShowConsole()		# "`" key
-		onPressKeyDict[app.DIK_LSHIFT]		= lambda : self.__SetQuickPageMode()
+		onPressKeyDict[app.DIK_I]			= lambda: self.interface.ToggleInventoryWindow()
+		onPressKeyDict[app.DIK_O]			= lambda: self.interface.ToggleDragonSoulWindowWithNoInfo()
+		onPressKeyDict[app.DIK_M]			= lambda: self.interface.PressMKey()
+		#onPressKeyDict[app.DIK_H]			= lambda: self.interface.OpenHelpWindow()
+		onPressKeyDict[app.DIK_ADD]			= lambda: self.interface.MiniMapScaleUp()
+		onPressKeyDict[app.DIK_SUBTRACT]	= lambda: self.interface.MiniMapScaleDown()
+		onPressKeyDict[app.DIK_L]			= lambda: self.interface.ToggleChatLogWindow()
+		onPressKeyDict[app.DIK_COMMA]		= lambda: self.ShowConsole()		# "`" key
+		onPressKeyDict[app.DIK_LSHIFT]		= lambda: self.__SetQuickPageMode()
 
-		onPressKeyDict[app.DIK_J]			= lambda : self.__PressJKey()
-		onPressKeyDict[app.DIK_H]			= lambda : self.__PressHKey()
-		onPressKeyDict[app.DIK_B]			= lambda : self.__PressBKey()
-		onPressKeyDict[app.DIK_F]			= lambda : self.__PressFKey()
+		onPressKeyDict[app.DIK_J]			= lambda: self.__PressJKey()
+		onPressKeyDict[app.DIK_H]			= lambda: self.__PressHKey()
+		onPressKeyDict[app.DIK_B]			= lambda: self.__PressBKey()
+		onPressKeyDict[app.DIK_F]			= lambda: self.__PressFKey()
 
 		# CUBE_TEST
 		#onPressKeyDict[app.DIK_K]			= lambda : self.interface.OpenCubeWindow()
@@ -1483,30 +1483,33 @@ class GameWindow(ui.ScriptWindow):
 		#
 		# Output character coordinates and FPS
 		(x, y, z) = player.GetMainCharacterPosition()
+
 		nUpdateTime = app.GetUpdateTime()
 		nUpdateFPS = app.GetUpdateFPS()
 		nRenderFPS = app.GetRenderFPS()
 		nFaceCount = app.GetFaceCount()
 		fFaceSpeed = app.GetFaceSpeed()
-		nST=background.GetRenderShadowTime()
+		nST = background.GetRenderShadowTime()
+
 		(fAveRT, nCurRT) =  app.GetRenderTime()
 		(iNum, fFogStart, fFogEnd, fFarCilp) = background.GetDistanceSetInfo()
 		(iPatch, iSplat, fSplatRatio, sTextureNum) = background.GetRenderedSplatNum()
+
 		if iPatch == 0:
 			iPatch = 1
 
 		#(dwRenderedThing, dwRenderedCRC) = background.GetRenderedGraphicThingInstanceNum()
 
-		self.PrintCoord.SetText("Coordinate: %.2f %.2f %.2f ATM: %d" % (x, y, z, app.GetAvailableTextureMemory()/(1024*1024)))
+		self.PrintCoord.SetText("Coordinate: %.2f %.2f %.2f ATM: %d" % (x, y, z, app.GetAvailableTextureMemory() / (1024 * 1024)))
 		xMouse, yMouse = wndMgr.GetMousePosition()
 		self.PrintMousePos.SetText("MousePosition: %d %d" % (xMouse, yMouse))			
 
 		self.FrameRate.SetText("UFPS: %3d UT: %3d FS %.2f" % (nUpdateFPS, nUpdateTime, fFaceSpeed))
 
-		if fAveRT>1.0:
-			self.Pitch.SetText("RFPS: %3d RT:%.2f(%3d) FC: %d(%.2f) " % (nRenderFPS, fAveRT, nCurRT, nFaceCount, nFaceCount/fAveRT))
+		if fAveRT > 1.0:
+			self.Pitch.SetText("RFPS: %3d RT: %.2f(%3d) FC: %d(%.2f) " % (nRenderFPS, fAveRT, nCurRT, nFaceCount, nFaceCount / fAveRT))
 
-		self.Splat.SetText("PATCH: %d SPLAT: %d BAD(%.2f)" % (iPatch, iSplat, fSplatRatio))
+		self.Splat.SetText("PATCH: %d SPLAT: %d BAD (%.2f)" % (iPatch, iSplat, fSplatRatio))
 		#self.Pitch.SetText("Pitch: %.2f" % (app.GetCameraPitch())
 		#self.TextureNum.SetText("TN : %s" % (sTextureNum))
 		#self.ObjectNum.SetText("GTI : %d, CRC : %d" % (dwRenderedThing, dwRenderedCRC))
@@ -1552,6 +1555,7 @@ class GameWindow(ui.ScriptWindow):
 
 		textTail.UpdateShowingTextTail()
 		textTail.ArrangeTextTail()
+
 		if -1 != self.PickingItemIndex:
 			textTail.SelectItemName(self.PickingItemIndex)
 
@@ -1669,7 +1673,7 @@ class GameWindow(ui.ScriptWindow):
 		
 		try:
 			for eachInfoText in listText.split("/"):
-				eachInfo = eachInfoText.split(",")
+				eachInfo	= eachInfoText.split(",")
 				itemVnum	= int(eachInfo[0])
 				itemCount	= int(eachInfo[1])
 
@@ -1679,7 +1683,8 @@ class GameWindow(ui.ScriptWindow):
 			resultCount = len(self.cubeInformation[npcVNUM])
 			requestCount = 7
 			modCount = resultCount % requestCount
-			splitCount = resultCount / requestCount
+			splitCount = resultCount // requestCount
+
 			for i in range(splitCount):
 				#print("/cube r_info %d %d" % (i * requestCount, requestCount))
 				net.SendChatPacket("/cube r_info %d %d" % (i * requestCount, requestCount))
@@ -2131,7 +2136,7 @@ class GameWindow(ui.ScriptWindow):
 		randX = app.GetRandom(-150, 150)
 		randY = app.GetRandom(-150, 150)
 
-		snd.PlaySound3D(x+randX, -y+randY, z, "sound/common/etc/salute.mp3")
+		snd.PlaySound3D(x + randX, -y + randY, z, "sound/common/etc/salute.mp3")
 
 	def __PartyRequestQuestion(self, vid):
 		vid = int(vid)

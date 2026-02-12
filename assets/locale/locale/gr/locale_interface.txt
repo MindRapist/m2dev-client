@@ -175,7 +175,7 @@ LOGIN_CONNECTING	Θα συνδεθείτε στο Server
 LOGIN_DEFAULT_SERVERADDR	Servername, Κανάλι 1
 LOGIN_EXIT	Έξοδος
 LOGIN_ID	Όνομα χρήστη
-LOGIN_PASSWORD	Σύνθημα
+LOGIN_PASSWORD	Συνθηματικό
 LOGIN_SELECT_BUTTON	Επιλογή
 LOGIN_SELECT_EXIT	Έξοδος
 LOGIN_SELECT_TITLE	Επιλογή Server

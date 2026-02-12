@@ -57,6 +57,9 @@ class Interface(object):
 		self.inputDialog = None
 		self.tipBoard = None
 		self.bigBoard = None
+		# MR-11: Suppress quest button when quest dialog is open to prevent quest button flashing
+		self.questButtonSuppressed = False
+		# MR-11: -- END OF -- Suppress quest button when quest dialog is open to prevent quest button flashing
 
 		# ITEM_MALL
 		self.mallPageDlg = None
@@ -107,11 +110,10 @@ class Interface(object):
 		self.wndGuild = uiGuild.GuildWindow()
 
 	def __MakeChatWindow(self):
-		
 		wndChat = uiChat.ChatWindow()
 		
 		wndChat.SetSize(wndChat.CHAT_WINDOW_WIDTH, 0)
-		wndChat.SetPosition(wndMgr.GetScreenWidth()/2 - wndChat.CHAT_WINDOW_WIDTH/2, wndMgr.GetScreenHeight() - wndChat.EDIT_LINE_HEIGHT - 37)
+		wndChat.SetPosition(wndMgr.GetScreenWidth() // 2 - wndChat.CHAT_WINDOW_WIDTH // 2, wndMgr.GetScreenHeight() - wndChat.EDIT_LINE_HEIGHT - 37)
 		wndChat.SetHeight(200)
 		wndChat.Refresh()
 		wndChat.Show()
@@ -1155,8 +1157,14 @@ class Interface(object):
 						self.wndDragonSoulRefine,
 
 		hideWindows = [x for x in hideWindows if x.IsShow()]
+
 		list([x.Hide() for x in hideWindows])
+
 		import sys
+
+		# MR-11: Suppress quest button when quest dialog is open to prevent quest button flashing
+		self.questButtonSuppressed = True
+		# MR-11: -- END OF -- Suppress quest button when quest dialog is open to prevent quest button flashing
 
 		self.HideAllQuestButton()
 		self.HideAllWhisperButton()
@@ -1168,8 +1176,15 @@ class Interface(object):
 
 	def __ShowWindows(self, wnds):
 		import sys
+
 		list([x.Show() for x in wnds])
+
+		# MR-11: Suppress quest button when quest dialog is open to prevent quest button flashing
+		self.questButtonSuppressed = False
+		# MR-11: -- END OF -- Suppress quest button when quest dialog is open to prevent quest button flashing
+
 		global IsQBHide
+
 		if not IsQBHide:
 			self.ShowAllQuestButton()
 		else:
@@ -1273,6 +1288,7 @@ class Interface(object):
 	### Quest ###	
 	def BINARY_ClearQuest(self, index):
 		btn = self.__FindQuestButton(index)
+
 		if 0 != btn:
 			self.__DestroyQuestButton(btn)		
 	
@@ -1321,7 +1337,13 @@ class Interface(object):
 			btn.ToolTipText.SetHorizontalAlignLeft()
 
 		btn.SetEvent(ui.__mem_func__(self.__StartQuest), btn)
-		btn.Show()
+
+		# MR-1: Hide quest button when quest dialog is open to prevent quest button flashing
+		if IsQBHide or self.questButtonSuppressed:
+			btn.Hide()
+		else:
+			btn.Show()
+		# MR-1: -- END OF -- Hide quest button when quest dialog is open to prevent quest button flashing
 
 		btn.index = index
 		btn.name = name
@@ -1332,7 +1354,6 @@ class Interface(object):
 		#chat.AppendChat(chat.CHAT_TYPE_NOTICE, localeInfo.QUEST_APPEND)
 
 	def __ArrangeQuestButton(self):
-
 		screenWidth = wndMgr.GetScreenWidth()
 		screenHeight = wndMgr.GetScreenHeight()
 
@@ -1345,19 +1366,23 @@ class Interface(object):
 		if app.IsRTL():
 			xPos = xPos + 15
 
-		yPos = 170 * screenHeight / 600
-		yCount = (screenHeight - 330) / 63
-
+		yPos = 170 * screenHeight // 600
+		yCount = (screenHeight - 330) // 63
 		count = 0
-		for btn in self.questButtonList:
 
-			btn.SetPosition(xPos + (int(count/yCount) * 100), yPos + (count%yCount * 63))
+		for btn in self.questButtonList:
+			btn.SetPosition(xPos + (int(count // yCount) * 100), yPos + (count % yCount * 63))
+	
 			count += 1
+
 			global IsQBHide
-			if IsQBHide:
+
+			# MR-1: Hide quest button when quest dialog is open to prevent quest button flashing
+			if IsQBHide or self.questButtonSuppressed:
 				btn.Hide()
 			else:
 				btn.Show()
+			# MR-1: -- END OF -- Hide quest button when quest dialog is open to prevent quest button flashing
 
 	def __StartQuest(self, btn):
 		event.QuestButtonClick(btn.index)
@@ -1505,19 +1530,19 @@ class Interface(object):
 
 	## Rearranges buttons when button count changes
 	def __ArrangeWhisperButton(self):
-
 		screenWidth = wndMgr.GetScreenWidth()
 		screenHeight = wndMgr.GetScreenHeight()
-
+	
 		xPos = screenWidth - 70
-		yPos = 170 * screenHeight / 600
-		yCount = (screenHeight - 330) / 63
-		#yCount = (screenHeight - 285) / 63
+		yPos = 170 * screenHeight // 600
+		yCount = (screenHeight - 330) // 63
+		#yCount = (screenHeight - 285) // 63
 
 		count = 0
-		for button in self.whisperButtonList:
 
-			button.SetPosition(xPos + (int(count/yCount) * -50), yPos + (count%yCount * 63))
+		for button in self.whisperButtonList:
+			button.SetPosition(xPos + (int(count // yCount) * -50), yPos + (count % yCount * 63))
+
 			count += 1
 
 	## Finds and returns Whisper button by name

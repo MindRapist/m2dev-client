@@ -730,7 +730,7 @@ TOOLTIP_MAX_SP	Максим. МП +%d	SA
 TOOLTIP_MAX_SP_PCT	Максим. МП +%d%%	SA
 TOOLTIP_MAX_STAMINA	Максим. выносливость +%d	SA
 TOOLTIP_MELEE_MAGIC_ATTBONUS_PER	Магическая, ближняя атака +%d%%	SA
-TOOLTIP_MEMORIZED_POSITION	%s(%d, %d)
+TOOLTIP_MEMORIZED_POSITION	%s (%d, %d)
 TOOLTIP_MEMORIZED_POSITION_ERROR	GPS-ошибка(%d, %d)
 TOOLTIP_MOV_SPEED	Скорость движения %d%%	SA
 TOOLTIP_NECK	Ожерелье

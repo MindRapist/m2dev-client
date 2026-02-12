@@ -6,10 +6,13 @@ This repository contains all client-side data, including locale files, configura
 
 ## 📋 Changelog
 
-### ⬆️ Feature Improvements
-* **Snow mountain and Snow Dungeon updated:** Updated Snow mountain and Snow Dungeon terrain, environment and textures
-* **Protos updated:** Updated protos for all locales with the new items and mobs/NPCs for the Snow Dungeon (some translations may be incomplete)
-* **Item icons and descriptions updated:** Updated item icons and descriptions for new items for all locales (some translations may be incomplete)
+### 🐛 Bug Fixes
+ - **Python 3 division compatibility**: Migrated a lot of divisions in a lot of files to `int` divisions instead of `floats` for Python 3 compatibility. This will be fixing a lot of bugs caused by the upgrade such as target board button centering, Dragon stones Grade in tooltip and more.
+ - **Completed the map names dictionary**: This improves functionality for all maps within the client, and fixes **the "invisible affects in dungeon" bug!
+ - **Dragon stone countdown in tooltip**: The countdown auto-starts and responds perfectly to all situations without waiting for the "first hover" from the player.
+ - **Quest refreshing**: Prevented the quest letters from appearing on top of the dialog curtain (if currently chatting with an NPC or item).
+ - **Minor translation improvements**
+ - **Several missing item icons added**
 
 <br>
 <br>

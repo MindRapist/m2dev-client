@@ -77,6 +77,7 @@ class TargetBoard(ui.ThinBoard):
 
 		self.buttonDict = {}
 		self.showingButtonList = []
+
 		for buttonName in self.BUTTON_NAME_LIST:
 			button = ui.Button()
 			button.SetParent(self)
@@ -223,7 +224,7 @@ class TargetBoard(ui.ThinBoard):
 		self.eventWhisper = event
 
 	def UpdatePosition(self):
-		self.SetPosition(wndMgr.GetScreenWidth()/2 - self.GetWidth()/2, 10)
+		self.SetPosition(wndMgr.GetScreenWidth() // 2 - self.GetWidth() // 2, 10)
 
 	def ResetTargetBoard(self):
 
@@ -270,7 +271,7 @@ class TargetBoard(ui.ThinBoard):
 	def SetHP(self, hpPercentage):
 		if not self.hpGauge.IsShow():
 
-			self.SetSize(200 + 7*self.nameLength, self.GetHeight())
+			self.SetSize(200 + 7 * self.nameLength, self.GetHeight())
 
 			if app.IsRTL():
 				self.name.SetPosition( self.GetWidth()-23, 13)
@@ -376,7 +377,6 @@ class TargetBoard(ui.ThinBoard):
 		return self.isShowButton
 
 	def RefreshButton(self):
-
 		self.HideAllButton()
 
 		if chr.INSTANCE_TYPE_BUILDING == chr.GetInstanceType(self.vid):
@@ -386,7 +386,7 @@ class TargetBoard(ui.ThinBoard):
 		
 		if player.IsPVPInstance(self.vid) or player.IsObserverMode():
 			# PVP_INFO_SIZE_BUG_FIX
-			self.SetSize(200 + 7*self.nameLength, 40)
+			self.SetSize(200 + 7 * self.nameLength, 40)
 			self.UpdatePosition()
 			# END_OF_PVP_INFO_SIZE_BUG_FIX			
 			return	
@@ -444,7 +444,8 @@ class TargetBoard(ui.ThinBoard):
 	def __ArrangeButtonPosition(self):
 		showingButtonCount = len(self.showingButtonList)
 
-		pos = -(showingButtonCount / 2) * 68
+		pos = -(showingButtonCount // 2) * 68
+
 		if 0 == showingButtonCount % 2:
 			pos += 34
 

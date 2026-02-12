@@ -192,6 +192,7 @@ class DragonSoulWindow(ui.ScriptWindow):
 	def Close(self):
 		if None != self.tooltipItem:
 			self.tooltipItem.HideToolTip()
+
 		self.Hide()
 	
 	def __DeckButtonDown(self, deck):
@@ -200,17 +201,26 @@ class DragonSoulWindow(ui.ScriptWindow):
 	def SetInventoryPage(self, page):
 		if self.inventoryPageIndex != page:
 			self.__HighlightSlot_ClearCurrentPage()
+
 		self.inventoryPageIndex = page
-		self.inventoryTab[(page+1)%5].SetUp()
-		self.inventoryTab[(page+2)%5].SetUp()
-		self.inventoryTab[(page+3)%5].SetUp()
-		self.inventoryTab[(page+4)%5].SetUp()
+
+		self.inventoryTab[(page + 1) % 5].SetUp()
+		self.inventoryTab[(page + 2) % 5].SetUp()
+		self.inventoryTab[(page + 3) % 5].SetUp()
+		self.inventoryTab[(page + 4) % 5].SetUp()
+
 		self.RefreshBagSlotWindow()
 
 	def SetItemToolTip(self, tooltipItem):
 		self.tooltipItem = tooltipItem
+
 		if tooltipItem:
 			tooltipItem.SetDragonSoulWindow(self)
+
+			# MR-11: Fix Dragon stones timer auto-start
+			if self.isActivated:
+				self.__WarmDragonSoulTimeCache()
+			# MR-11: -- END OF -- Fix Dragon stones timer auto-start
 
 	def RefreshItemSlot(self):
 		self.RefreshBagSlotWindow()
@@ -400,9 +410,9 @@ class DragonSoulWindow(ui.ScriptWindow):
 			itemPrice = item.GetISellItemPrice()
 
 			if item.Is1GoldItem():
-				itemPrice = itemCount / itemPrice / 5
+				itemPrice = itemCount // itemPrice // 5
 			else:
-				itemPrice = itemPrice * itemCount / 5
+				itemPrice = itemPrice * itemCount // 5
 
 			item.GetItemName(itemIndex)
 			itemName = item.GetItemName()
@@ -547,6 +557,7 @@ class DragonSoulWindow(ui.ScriptWindow):
 		if mouseModule.mouseController.isAttached():
 			attachedSlotType = mouseModule.mouseController.GetAttachedType()
 			attachedSlotPos = mouseModule.mouseController.GetAttachedSlotNumber()
+
 			# Case of dragging item onto itself
 			if player.SLOT_TYPE_INVENTORY == attachedSlotType and itemSlotIndex == attachedSlotPos:
 				return
@@ -561,6 +572,7 @@ class DragonSoulWindow(ui.ScriptWindow):
 		else:
 			selectedItemVNum = player.GetItemIndex(player.INVENTORY, itemSlotIndex)
 			itemCount = player.GetItemCount(player.INVENTORY, itemSlotIndex)
+
 			mouseModule.mouseController.AttachObject(self, player.SLOT_TYPE_INVENTORY, itemSlotIndex, selectedItemVNum, itemCount)
 			self.wndItem.SetUseMode(False)
 			snd.PlaySound("sound/ui/pick.wav")
@@ -581,10 +593,12 @@ class DragonSoulWindow(ui.ScriptWindow):
 				if 0 == player.GetItemMetinSocket(player.DRAGON_SOUL_INVENTORY, attachedSlotPos, 0):
 					self.wndPopupDialog.SetText(localeInfo.DRAGON_SOUL_EXPIRED)
 					self.wndPopupDialog.Open()
+
 					return
 			
 				item.SelectItem(attachedItemIndex)
 				subType = item.GetItemSubType()
+
 				if subType != (selectedSlot - player.DRAGON_SOUL_EQUIPMENT_SLOT_START):
 					self.wndPopupDialog.SetText(localeInfo.DRAGON_SOUL_UNMATCHED_SLOT)
 					self.wndPopupDialog.Open()
@@ -618,11 +632,13 @@ class DragonSoulWindow(ui.ScriptWindow):
 			net.SendItemUsePacket(*self.srcItemPos)
 		else:
 			self.__SendMoveItemPacket(*(self.srcItemPos + self.dstItemPos + (0,)))
+
 		self.dlgQuestion.Close()
 
 	def __Cancel(self):
 		self.srcItemPos = (0, 0)
 		self.dstItemPos = (0, 0)
+
 		self.dlgQuestion.Close()
 
 	# Warning dialog related end
@@ -652,9 +668,11 @@ class DragonSoulWindow(ui.ScriptWindow):
 		if self.isActivated:
 			self.DeactivateDragonSoul()
 			net.SendChatPacket("/dragon_soul deactivate")
+
 		self.deckPageIndex = page
+
 		self.deckTab[page].Down()
-		self.deckTab[(page+1)%2].SetUp()
+		self.deckTab[(page + 1) % 2].SetUp()
 		
 		self.RefreshEquipSlotWindow()
 	
@@ -663,13 +681,17 @@ class DragonSoulWindow(ui.ScriptWindow):
 		self.isActivated = True
 		self.activateButton.Down()
 		self.deckPageIndex = deck
+
 		self.deckTab[deck].Down()
-		self.deckTab[(deck+1)%2].SetUp()
+		self.deckTab[(deck + 1) % 2].SetUp()
+
 		self.RefreshEquipSlotWindow()
+		self.__WarmDragonSoulTimeCache(deck)
 		
 	def DeactivateDragonSoul(self):
 		self.isActivated = False
 		self.activateButton.SetUp()
+
 		if self.tooltipItem:
 			self.tooltipItem.ClearDragonSoulTimeCache()
 
@@ -682,8 +704,11 @@ class DragonSoulWindow(ui.ScriptWindow):
 		if not self.isActivated or self.deckPageIndex != deckIndex:
 			if self.__CanActivateDeck():
 				net.SendChatPacket("/dragon_soul activate " + str(deckIndex))
+
 				self.isActivated = True
+
 				self.activateButton.Down()
+				self.__WarmDragonSoulTimeCache(deckIndex)
 			else:
 				self.isActivated = False
 				self.activateButton.SetUp()
@@ -695,13 +720,16 @@ class DragonSoulWindow(ui.ScriptWindow):
 
 	def __CanActivateDeck(self):
 		canActiveNum = 0
+
 		for i in range(6):
 			slotNumber = self.__InventoryLocalSlotPosToGlobalSlotPos(player.INVENTORY, player.DRAGON_SOUL_EQUIPMENT_SLOT_START + i)
 			itemVnum = player.GetItemIndex(slotNumber)
 			
 			if itemVnum != 0:
 				item.SelectItem(itemVnum)
+
 				isNoLimit = True
+
 				for i in range(item.LIMIT_MAX_NUM):
 					(limitType, limitValue) = item.GetLimit(i)
 					
@@ -711,14 +739,34 @@ class DragonSoulWindow(ui.ScriptWindow):
 					if item.LIMIT_TIMER_BASED_ON_WEAR == limitType:
 						isNoLimit = False
 						remain_time = player.GetItemMetinSocket(player.INVENTORY, slotNumber, 0)
+
 						if 0 != remain_time:
 							canActiveNum += 1
 							break
+
 				# Dragon soul can be activated if it has no timer
 				if isNoLimit:
 					canActiveNum += 1
 		
 		return canActiveNum > 0
+
+	# MR-11: Fix Dragon stones timer auto-start
+	def __WarmDragonSoulTimeCache(self, deckIndex = None):
+		if not self.tooltipItem:
+			return
+
+		if not self.isActivated:
+			return
+
+		if deckIndex is None:
+			deckIndex = self.deckPageIndex
+
+		deckStart = deckIndex * player.DRAGON_SOUL_EQUIPMENT_FIRST_SIZE
+		deckStart += player.DRAGON_SOUL_EQUIPMENT_SLOT_START
+		slotNumbers = [deckStart + i for i in range(6)]
+
+		self.tooltipItem.WarmDragonSoulTimeCache(slotNumbers)
+	# MR-11: -- END OF -- Fix Dragon stones timer auto-start
 	
 	# Activation related end
 
@@ -1136,10 +1184,10 @@ class DragonSoulRefineWindow(ui.ScriptWindow):
 	def __GetDragonSoulTypeInfo(self, vnum):
 		if not self.__IsDragonSoul(vnum):
 			return DragonSoulRefineWindow.INVALID_DRAGON_SOUL_INFO 
-		ds_type = vnum / 10000
-		grade = vnum % 10000 /1000
-		step = vnum % 1000 / 100
-		strength = vnum % 100 / 10
+		ds_type = vnum // 10000
+		grade = vnum % 10000 //1000
+		step = vnum % 1000 // 100
+		strength = vnum % 100 // 10
 		
 		return (ds_type, grade, step, strength)
 	

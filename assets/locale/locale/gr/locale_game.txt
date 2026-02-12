@@ -94,7 +94,7 @@ EMOTION_CHEERS_1	Αγαλλίαση 1
 EMOTION_CHEERS_2	Αγαλλίαση 2
 EMOTION_CHEERUP	Ευθυμία
 EMOTION_CHOOSE_ONE	Διάλεξε στόχο
-EMOTION_CLAP	Claps
+EMOTION_CLAP	Παλαμάκια
 EMOTION_CLAP_KISS	Φιλί
 EMOTION_CONGRATULATION	Αποδοχή
 EMOTION_DANCE_1	Χορός 1
@@ -416,16 +416,16 @@ PARTY_HEAL_ALL_MEMBER	Αποκατάσταση όλων.
 PARTY_INCREASE_AREA_150	Η ακτίνας ομάδας αναβαθμίστηκε κατά παράγοντα 1,5.	SNA
 PARTY_INCREASE_AREA_200	Η ακτίνας ομάδας αναβαθμίστηκε κατά παράγοντα 2.	SNA
 PARTY_LEAVE	Έξοδος από ομάδα
-PARTY_MEMBER_OFFLINE	[Offline]
+PARTY_MEMBER_OFFLINE	[Εκτός σύνδεσης]
 PARTY_RECALL_MEMBER	Κλήση μελών ομάδας.
 PARTY_REQUEST_DENIED	Η αίτηση σου απορρίφθηκε.
-PARTY_SET_ATTACKER	Constitute as Επιτιθέμενος.
-PARTY_SET_BERSERKER	Constitute as Berserker.
-PARTY_SET_BUFFER	Constitute as Blocker.
-PARTY_SET_DEFENDER	Constitute as Αμυνόμενος.
+PARTY_SET_ATTACKER	Ορισμός ως Επιτιθέμενος.
+PARTY_SET_BERSERKER	Ορισμός ως Berserker.
+PARTY_SET_BUFFER	Ορισμός ως Blocker.
+PARTY_SET_DEFENDER	Ορισμός ως Αμυνόμενος.
 PARTY_SET_NORMAL	Ρυθμίσεις υποχώρησης.
 PARTY_SET_SKILL_MASTER	Επιλογή ώς βασικής ικανότητας.
-PARTY_SET_TANKER	Σύνταξη μαχητή Σώμα με Σώμα
+PARTY_SET_TANKER	Ορισμός ως Μαχητής Σώμα με Σώμα
 PARTY_SKILL_ATTACKER	Base Attack Value Attacker +%.0f
 PARTY_SKILL_BERSERKER	Attack Speed Berserker +%.0f
 PARTY_SKILL_BUFFER	Διάρκεια Ικανότητας Μπλοκ +%.0f
@@ -730,7 +730,7 @@ TOOLTIP_MAX_SP	Μεγ. SP +%d	SA
 TOOLTIP_MAX_SP_PCT	Μεγ. SP +%d%%	SA
 TOOLTIP_MAX_STAMINA	Μεγ. Αντοχή +%d	SA
 TOOLTIP_MELEE_MAGIC_ATTBONUS_PER	Μαγική επίθεση/εξ επαφής +%d%%	SA
-TOOLTIP_MEMORIZED_POSITION	%s(%d, %d)
+TOOLTIP_MEMORIZED_POSITION	%s (%d, %d)
 TOOLTIP_MEMORIZED_POSITION_ERROR	GPS ERROR(%d, %d)
 TOOLTIP_MOV_SPEED	Ταχύτητα %d%%	SA
 TOOLTIP_NECK	Περιδέραιο

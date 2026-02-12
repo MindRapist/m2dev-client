@@ -241,6 +241,7 @@ STAT_MINUS_DESCRIPTION = {
 	'DEX-': 								STAT_MINUS_DEX,
 }
 
+# MR-11: Complete map name list
 # Map names
 MINIMAP_ZONE_NAME_DICT = {
 	'metin2_map_a1': 						MAP_A1,
@@ -256,20 +257,42 @@ MINIMAP_ZONE_NAME_DICT = {
 	'metin2_map_n_flame_01': 				MAP_FLAME,
 	'metin2_map_n_desert_01': 				MAP_DESERT,
 	'metin2_map_milgyo': 					MAP_TEMPLE,
+	'metin2_map_monkeydungeon': 			MAP_MONKEY_DUNGEON,
+	'metin2_map_monkeydungeon_02': 			MAP_MONKEY_DUNGEON2,
+	'metin2_map_monkeydungeon_03': 			MAP_MONKEY_DUNGEON3,
 	'metin2_map_spiderdungeon': 			MAP_SPIDER,
-	'metin2_map_deviltower1': 				MAP_SKELTOWER,
-	'metin2_map_guild_01': 					MAP_AG,
-	'metin2_map_guild_02': 					MAP_BG,
-	'metin2_map_guild_03': 					MAP_CG,
+	'metin2_map_spiderdungeon_02': 			MAP_SPIDERDUNGEON_02,
+	'metin2_map_spiderdungeon_03': 			MAP_SPIDERDUNGEON_03,
+	'metin2_map_deviltower1': 				MAP_DEVILTOWER1,
+	'metin2_map_devilsCatacomb': 			MAP_DEVILCATACOMB,
+	'metin2_map_guild_01': 					MAP_GUILD_01,
+	'metin2_map_guild_02': 					MAP_GUILD_02,
+	'metin2_map_guild_03': 					MAP_GUILD_03,
+	'metin2_guild_village_01':				GUILD_VILLAGE_01,
+	'metin2_guild_village_02':				GUILD_VILLAGE_02,
+	'metin2_guild_village_03':				GUILD_VILLAGE_03,
 	'metin2_map_trent': 					MAP_TREE,
 	'metin2_map_trent02': 					MAP_TREE2,
 	'season1/metin2_map_WL_01': 			MAP_WL,
 	'season1/metin2_map_nusluck01': 		MAP_NUSLUCK,
+	'season1/metin2_map_oxevent': 			MAP_OXEVENT,
+	'metin2_map_wedding_01': 				MAP_WEDDING_01,
+	'metin2_map_bf': 						MAP_BATTLE_FIELD,
+	'metin2_map_bf_02': 					MAP_BATTLE_FIELD,
+	'metin2_map_bf_03': 					MAP_BATTLE_FIELD,
 	'Metin2_map_CapeDragonHead': 			MAP_CAPE,
 	'metin2_map_Mt_Thunder': 				MAP_THUNDER,
 	'metin2_map_dawnmistwood': 				MAP_DAWN,
 	'metin2_map_BayBlackSand': 				MAP_BAY,
+	'metin2_map_n_flame_dungeon_01': 		MAP_N_FLAME_DUNGEON_01,
+	'metin2_map_n_snow_dungeon_01': 		MAP_N_SNOW_DUNGEON_01,
+	'metin2_map_duel': 						MAP_DUEL,
+	'season2/metin2_map_skipia_dungeon_01': MAP_SKIPIA_DUNGEON_01,
+	'metin2_map_skipia_dungeon_02': 		MAP_SKIPIA_DUNGEON_02,
+	'metin2_map_skipia_dungeon_boss': 		MAP_SKIPIA_DUNGEON_BOSS,
+	'metin2_map_skipia_dungeon_boss2': 		MAP_SKIPIA_DUNGEON_BOSS_2,
 }
+# MR-11: -- END OF -- Complete map name list
 
 # Path of quest icon file
 def GetLetterImageName():
@@ -351,6 +374,7 @@ def SecondToDHM(time):
 	day = ((time // 60) // 60) // 24
 
 	text = ''
+
 	if day > 0:
 		text += str(day) + DAY
 		text += ' '
@@ -394,18 +418,18 @@ def RTSecondToDHMS(time):
 
 	if d or not text:
 		if d:
-			text += "%dd " % d
+			text += str(d) + " " + DAY + (", " if h or m or s else "")
 
 	if h or not text:
 		if h:
-			text += "%dh " % h
+			text += str(h) + " " + HOUR + (", " if m or s else "")
 
 	if m or not text:
 		if m:
-			text += "%dm " % m
+			text += str(m) + " " + MINUTE + (", " if s else "")
 
 	if s or not text:
 		if s:
-			text += "%ds " % s
+			text += str(s) + " " + SECOND
 
 	return text.strip()
